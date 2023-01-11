@@ -1,1 +1,6 @@
 # ododocker
+
+# Install 
+
+# Run 
+
