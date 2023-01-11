@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   web:
-    image: odoo:latest
+    image: odoo:15.0
     depends_on:
       - db
     ports:
