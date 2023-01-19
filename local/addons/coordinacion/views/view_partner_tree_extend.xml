@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="coordinacion_view_partner_tree_inherit" model="ir.ui.view">
+        <field name="name">coordinacion.view.partner.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='phone']" position="before">
+                    <field name="hcd_type" string="Tipo"/>
+		    </xpath>
+
+        </field>
+    </record>
+
+</odoo>

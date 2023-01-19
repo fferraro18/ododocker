@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="report_paciente_id_card">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                  <div class="page">
+                    <div class="oe_structure">
+                      <div class="row">
+                        <div class="col-xs-8">
+                          <table class="table table-condensed" style="boder:3px solid black important!;">
+                           <tr>
+                            <td width="40%">
+                              <p style="text-lign:center;padding-top:10px;">
+                                <img t-if="not o.image_1920"
+                                  t-att-src="'../static/description/icon.png'" heigh="140"
+                                  boder="1" width="120" />
+                                <img t-if="o.image_1920"
+                                  t-att-src="'data:image/png;base64,%s' % to_text(o.image_1920)" heigh="140"
+                                  boder="1" width="120" />
+                              </p>
+                            </td>
+                            <td width="60%">
+                              <table>
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                     <span t-field="o.first_name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                      <span>
+                                        <strong>Apellido:</strong>
+                                      </span>
+                                    </td>
+                                    <td>
+                                      <span>
+                                        <strong>:</strong>
+                                      </span>
+                                    </td>
+                                    <td>
+                                     <span t-field="o.last_name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                              </table>
+                            </td>
+                           </tr>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

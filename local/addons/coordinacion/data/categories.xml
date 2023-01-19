@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+          <record id="product_category_nomenclador" model="product.category">
+            <field name="name">Nomenclador</field>
+          </record>
+          <record id="product_category_materiales" model="product.category">
+            <field name="name">Material</field>
+          </record>
+    </data>
+</odoo>

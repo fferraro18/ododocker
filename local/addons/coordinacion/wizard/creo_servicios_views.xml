@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="creo_servicios_form_view_wiz" model="ir.ui.view">
+            <field name="name">creo.servicios.form.view.wiz</field>
+            <field name="model">hcd.creo.servicios</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="obra_social_id"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Crear Servicios" type="object" name="creo_servicios" class="btn-primary" />
+                        <button string="Cancelar" special="cancel" class="btn-secondary" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="creo_servicios_action_window" model="ir.actions.act_window">
+            <field name="name">Crear Servicios por OS</field>
+            <field name="res_model">hcd.creo.servicios</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="coordinacion.creo_servicios_form_view_wiz" />
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_res_partner" />
+            <field name="binding_view_types">list</field>
+        </record>
+        
+    </data>
+</odoo>

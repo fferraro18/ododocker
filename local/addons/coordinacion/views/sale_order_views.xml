@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>   
+   <record id="sale_order_view_form_creo_plan" model="ir.ui.view">
+        <field name="name">sale.order.form.creo.plan</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_quotation_send']" position="before">
+                <button name="create_plan_trabajo_from_sale" 
+                    string="Crea Orden de Prestación"
+                    attrs="{'invisible': ['|','|',('estado_pt','!=','SIN CREAR'),('partner_type_view', '!=', 'Cliente/Paciente'),('state','!=','sale')]}" 
+                    type="object"
+                    icon="fa-plus"
+                    class="btn-primary"/>
+            </xpath>
+<xpath expr="//field[@name='partner_id']" position="after">
+ <field name="partner_type_view" string="Tipo de cliente" readonly="1"/>
+ </xpath>
+  <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="estado_pt" string="Orden Prestación" readonly="1"
+                        decoration-success="estado_pt == 'CREADO'"
+                        decoration-warning="estado_pt == 'SIN CREAR'"
+                        decoration-danger="estado_pt == 'procesado_error'"
+                        widget="badge"/>
+            </xpath>
+            <xpath expr="//button[@name='action_quotation_send']" position="after">
+                <button name="agregar_plan_trabajo_to_op" 
+                    string="Agregar a OP existente"
+                    attrs="{'invisible': ['|','|',('estado_pt','!=','SIN CREAR'),('partner_type_view', '!=', 'Cliente/Paciente'),('state','!=','sale')]}"
+                    confirm="Atencion, esta prestación va a ser agregada a una op existente"
+                    type="object"
+                    icon="fa-plus"
+                    class="btn-primary"/>
+            </xpath>
+
+            <xpath expr="//button[@name='action_quotation_send']" position="before">
+                <button name="actualizar_mark_up" 
+                    string="Actualizar MArkUp"
+                    attrs="{'invisible': [('utilizar_mu','=',False)]}"
+                    type="object"
+                    icon="fa-plus"
+                    class="btn-primary"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="nodo_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                    <field name="partner_type_view" string="Tipo de cliente" readonly="1"/>
+                    <field name="paga_paciente" string="Paga el paciente: ?" attrs="{'invisible': [('partner_type_view', '!=', 'Cliente/Paciente')]}"/>
+                    <field name="financiador_id" options="{'no_open': True, 'no_create': True}" attrs="{'invisible': ['&amp;',('partner_type_view', '!=', 'Oportunidad'),('partner_type_view', '!=', False)]}"/>
+                    <field name="obra_social_id_view" string="Financiador asociado" readonly="1" attrs="{'invisible': [('partner_type_view', '!=', 'Cliente/Paciente')]}"/>
+                    <field name="coordinador_id_view" string="Coordinador" readonly="1"/>
+                    <field name="filtro_id"/>
+                
+            </xpath>
+
+          <xpath expr="//field[@name='default_end_date']" position="after">
+                    <field name="nodo_view"  invisible="1"/>
+                    <field name="aux_start_date"  invisible="1"/>
+                    <field name="aux_end_date"  invisible="1"/>
+                    <field name="complejidad_costo"  invisible="1"/>
+                    <field name="discapacidad_costo"  invisible="1"/>
+                    <field name="utilizar_mu" string="Utilizar MarkUp"/>
+                    <field name="mu_servicio" attrs="{'invisible': [('utilizar_mu', '=', False)]}" />
+                    <field name="mu_equipo" attrs="{'invisible': [('utilizar_mu', '=', False)]}" />
+                    <field name="mu_insumo" attrs="{'invisible': [('utilizar_mu', '=', False)]}" />
+            </xpath>
+              
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="domain">['|','|',('hcd_type', '=', 'cliente'),('hcd_type', '=', 'paciente'),('hcd_type', '=', 'cliente_paciente')]</attribute>
+                <attribute name="options">{'no_create': True, 'no_open': True}</attribute>
+            </xpath>
+     
+        
+     
+
+            <xpath expr="//field[@name='product_id']" position="attributes">
+                <attribute name="invisible">1</attribute>  
+            </xpath>  
+
+            <xpath expr="//field[@name='product_id']" position="after">
+                <field name="product_template_id" 
+                    readonly = "0"
+                    required = "1"
+                     domain = "['|','&amp;','&amp;','&amp;',  
+                    ('obra_social_id', '=', parent.filtro_id),
+                    ('paliativo', '=', parent.paliativo),
+                    ('tipo_paciente', '=', parent.tipo_paciente),
+                    ('complejidad', '=', parent.complejidad),
+                    ('hcd_categ_prod','!=','servicio')]"
+                    options = "{'no_create': True, 'no_open': True}" />
+            </xpath>
+
+            <xpath expr="//field[@name='default_start_date']" position="attributes">
+                <attribute name="required">1</attribute>  
+            </xpath> 
+            <xpath expr="//field[@name='default_end_date']" position="attributes">
+                <attribute name="required">1</attribute>  
+            </xpath> 
+
+            <!-- <xpath expr="//field[@name='product_uom']" position="attributes">
+                <attribute name="invisible">1</attribute>  
+                <attribute name="required">0</attribute>  
+            </xpath>  -->
+<!--      
+        
+
+            <xpath expr="//field[@name='note']" position="attributes">
+                <attribute name="readonly">1</attribute>
+             </xpath>
+  
+
+            <xpath expr="//field[@name='price_unit']" position="after">
+                    <field name="costo_prestacion" string="Costo unitario"/>
+                    <field name="dia_habil" string="Día (p/calcular costo)"/>
+                    <field name="partner_id"></field>
+                    <field name="nro_autorizacion"></field>
+            </xpath>
+-->
+
+
+            <!-- <xpath expr="//field[@name='order_line']" position="attributes">
+                <attribute name="context">{
+                    'default_partner_id': partner_id,
+                    'default_tipo_paciente':tipo_paciente,
+                    'default_paliativo': paliativo,
+                    'default_complejidad': complejidad,
+                    'default_discapacidad': discapacidad,
+                    'default_porcentaje_vip': porcentaje_vip,
+                    'default_complejidad_costo': complejidad_costo,
+                    'default_discapacidad_costo': discapacidad_costo,
+                    'default_zona_costos_id': zona_costos_id,
+                    'default_utilizar_mu': utilizar_mu,
+                    'default_mu_servicio': mu_servicio,
+                    'default_mu_equipo': mu_equipo,
+                    'default_mu_insumo': mu_insumo,
+                    'default_frecuencia': 'diaria',
+                    'default_start_date': aux_start_date,
+                    'default_product_uom': 1,
+                    'default_end_date': aux_end_date}</attribute>
+                
+            </xpath> -->
+     
+            <xpath expr="//field[@name='product_template_id']" position="after">
+                    <field name="descripcion_view" string="Descripción del servicio"/>
+                    <field name="cantidad_prestacion" string="Cantidad de prestación"/>
+                    <field name="frecuencia" string="Frecuencia"  required="True"/>
+                    <field name="dias_ids" widget="many2many_tags"  options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" attrs="{'invisible':[('frecuencia','!=', 'semanal')]}"/>
+                    <field name="fechas_seleccionadas"  widget="multiple_datepicker" attrs="{'invisible':[('frecuencia','!=', 'quincenal'),('frecuencia','!=', 'mensual')]}" />
+                    <field name="start_date" string="Fecha de inicio"  required="True"/>
+                    <field name="end_date" string="Fecha de fin"  required="True"/>
+                    <field name="calculo_cantidad" string="Calcular cantidad"/>
+                    <field name="utilizar_mu" readonly="1"/>
+
+                        
+                    <!-- <button name="calculo_cantidad_de_prestaciones" 
+                        string="Calcular cantidad"
+                        type="object"
+                        icon="fa-plus"
+                        class="btn-primary"/> -->
+        
+
+            </xpath>
+
+
+           
+
+            <xpath expr="//notebook" position="before">
+                
+                 <div class="row">
+                    <div class="col-4">
+                        <group>
+                                <field name="tipo_paciente" string="Servicios - Paciente tipo" required="True"/>
+                                <field name="paliativo" string="Servicios - Paliativo" required="True"/>
+                                <field name="complejidad"  string="Servicios - Complejidad"/>
+                                <field name="discapacidad" string="Servicios - Discapacidad"/>
+                                <field name="porcentaje_vip" string="Servicios - Porcentaje Vip"/>
+                         
+                        </group>
+                    </div> 
+                    <div class="col-4">
+                        <group>
+                                <field name="complejidad_costo" string="Costos - Complejidad"/>
+                                <field name="discapacidad_costo" string="Costos - Discapacidad"/>
+                                <field name="zona_costos_id" string="Costos - Zona" required="True" options="{'no_open': True, 'no_create': True}" />
+                        </group>
+                    </div> 
+                </div>   
+
+                <!-- <group>
+                    <field name="op_ids" readonly="1"/>
+                </group>  -->
+            </xpath> 
+        </field>   
+    </record>
+
+</odoo>

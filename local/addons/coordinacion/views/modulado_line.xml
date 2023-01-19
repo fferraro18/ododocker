@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_coordinacion_modulado_line_form" model="ir.ui.view">
+        <field name="model">hcd.modulado_line</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>   
+                        <group>
+                            <field name="product_id" required="True" domain="['|',('hcd_categ_prod','!=','servicio'),('obra_social_id', '=', parent.filtro_id)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                            <field name="descripcion_view" readonly="1"/>
+                            <field name="cod_practica_cli" />
+                            <field name="desc_practica_cli" />
+                            <field name="cantidad" required="True" />
+
+                            <field name="frecuencia" required="True" />
+                            <field name="dias_ids" widget="many2many_tags"  options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" attrs="{'invisible':[('frecuencia','!=', 'semanal')]}"/>
+                            <field name="fechas_seleccionadas"  widget="multiple_datepicker" attrs="{'invisible':[('frecuencia','!=', 'quincenal'),('frecuencia','!=', 'mensual')]}" /> 
+                            <field name="fecha_aux_ini" attrs="{'invisible':['|','|',('parent.utilizar_vigencia','=', False),('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                            <field name="fecha_aux_fin" attrs="{'invisible':['|','|',('parent.utilizar_vigencia','=', False),('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                            <field name="calculo_cantidad" string="Calcular cantidad" attrs="{'invisible':[('parent.utilizar_vigencia','=', False)]}"/>
+                            <field name="cantidad_total" string="Cant. calculada" attrs="{'invisible':[('parent.utilizar_vigencia','=', False)]}"/>
+                            <field name="cant_max_mensual"/>
+                            <field name="precio_referencia" readonly="1"/>
+                            <field name="precio"/>
+                            <field name="porcentaje" string="%Prec"/>
+                            <field name="costo_referencia" readonly="1"/>
+                            <field name="costo"/> 
+                            
+                        </group>
+            
+                    <!-- <footer>
+                        <button name="viaticos"  attrs="{'invisible':[('prestador_id','=', False)]}"
+                            string="Viáticos"
+                            type="object"
+                            icon="fa-plus"
+                            class="btn-primary"/>
+
+                    </footer> -->
+                
+            
+            </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_modulado_line" model="ir.ui.view">
+        <field name="name">plan Tree</field>
+        <field name="model">hcd.modulado_line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+        
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_modulado_line_filter" model="ir.ui.view">
+            <field name="name">coordinacion.modulado.line.search</field>
+            <field name="model">hcd.modulado_line</field>
+            <field name="arch" type="xml">
+                <search string="modulados">
+                    <field name="name"/>
+           
+                </search>
+             </field>
+    </record>
+
+
+<record id='action_modulado_line' model='ir.actions.act_window'>
+    <field name='name'>modulado_line</field>
+    <field name="res_model">hcd.modulado_line</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_modulado_line')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_modulado_line_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación del modulado
+        </p>
+        </field>
+  </record>
+
+
+
+ <record id='action_modulado_line' model='ir.actions.act_window'>
+    <field name='name'>modulado_line</field>
+    <field name="res_model">hcd.modulado_line</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+
+</odoo>

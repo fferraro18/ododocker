@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_coordinacion_nomenclador_form" model="ir.ui.view">
+        <field name="model">hcd.nomenclador</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>   
+                <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="categoria_id" options="{'no_open': True, 'no_create': True}"/>
+				<!--<field name="codigo" string="Código"/>-->
+                            <field name="description" string="Descripción" required="True"/>
+                            <field name="exclude_statistics" />
+                            <field name="practica_doble" />
+                            <field name="active" />
+                        </group>
+                        
+                </sheet>
+            </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_nomenclador" model="ir.ui.view">
+        <field name="name">Nomenclador Tree</field>
+        <field name="model">hcd.nomenclador</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="categoria_id" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nomenclador_filter" model="ir.ui.view">
+            <field name="name">coordinacion.nomenclador.search</field>
+            <field name="model">hcd.nomenclador</field>
+            <field name="arch" type="xml">
+                <search string="Nomencladores">
+                    <field name="name"/>
+                    <field name="categoria_id"/>
+			<!--<field name="codigo"/>-->
+                    <field name="description"/>
+                </search>
+             </field>
+    </record>
+
+
+<record id='action_nomenclador' model='ir.actions.act_window'>
+    <field name='name'>Nomenclador</field>
+    <field name="res_model">hcd.nomenclador</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_nomenclador')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_nomenclador_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Nomenclador
+        </p>
+        </field>
+  </record>
+
+
+
+ <record id='action_nomenclador' model='ir.actions.act_window'>
+    <field name='name'>Nomenclador</field>
+    <field name="res_model">hcd.nomenclador</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+
+</odoo>

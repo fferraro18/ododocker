@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+
+          <record id="nomenclador_category_kinesiologia_adultos" model="hcd.categoria_nomenclador">
+            <field name="name">KINESIOLOGIA ADULTOS Prueba</field>
+      	    <field name="prefijo">XXXX</field>
+          </record>
+
+    </data>
+</odoo>

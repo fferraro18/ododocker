@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_coordinacion_efector_form" model="ir.ui.view">
+            <field name="name">coordinacion.efector.view.form.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="coordinacion.view_coordinacion_prestador_form"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='es_grupo']" position="replace">
+                    <field name="prestador_id" required="True" options="{'no_create': True, 'no_create_edit':True}"/>
+                </xpath> 
+
+                <!-- <group name="referencia" position="after">
+                        <group/>     ... put Accounting group under Amount group ...
+                        <group >
+                            <field name="prestador_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                        </group>
+                </group> -->
+
+
+            </field>
+        </record>     
+    </data>
+
+   <record id="view_tree_efector_checkout" model="ir.ui.view">
+        <field name="name">Checkout Tree</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" />
+                <field name="name" />
+                <field name="dni" />
+                <field name="prestador_id" />
+                <field name="specialty" />
+                <field name="title" />
+                <field name="zona_cobertura_pres_id" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="scoring" />
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_efector_filter" model="ir.ui.view">
+            <field name="name">coordinacion.efector.search</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search string="Efectores">
+                    <field name="name"/>
+                    <field name="prestador_id" />
+                    <field name="specialty"/>
+                    <field name="title"/>
+                    <field name="zona_cobertura_pres_id"/>
+                </search>
+             </field>
+    </record>
+
+<record id='action_efector' model='ir.actions.act_window'>
+    <field name='name'>Efectores</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_type':'efector','default_country_id':10}</field>
+    <field name="domain">[('hcd_type', '=', 'efector')]</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_efector_checkout')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_efector_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Efectores
+        </p>
+        </field>
+  </record>
+
+
+
+</odoo>

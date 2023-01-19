@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="report_paciente_card" model="ir.actions.report">
+        <field name="name">Perfil Paciente</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">coordinacion.report_paciente_id_card</field>
+        <field name="report_file">coordinacion.report_paciente_id_card</field>
+        <field name="binding_model_id" ref="model_res_partner"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_op_pami_text" model="ir.actions.report">
+        <field name="name">Liquidacion Pami</field>
+        <field name="model">hcd.agenda</field>
+        <field name="report_type">qweb-text</field>
+        <field name="report_name">coordinacion.report_op_pami_cdsm_text</field>
+        <field name="report_file">coordinacion.report_op_pami_cdsm_text</field>
+        <field name="binding_model_id" ref="model_hcd_agenda"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_plan_trabajo_card" model="ir.actions.report">
+        <field name="name">Plan de Trabajo</field>
+        <field name="model">hcd.plan_trabajo</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">coordinacion.report_plan_trabajo_card</field>
+        <field name="report_file">coordinacion.report_plan_trabajo_card</field>
+        <field name="binding_model_id" ref="model_hcd_plan_trabajo"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_op_pami_card" model="ir.actions.report">
+        <field name="name">OP de PAMI</field>
+        <field name="model">hcd.modelo_pami</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">coordinacion.report_op_pami_card</field>
+        <field name="report_file">coordinacion.report_op_pami_card</field>
+        <field name="binding_model_id" ref="model_hcd_modelo_pami"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

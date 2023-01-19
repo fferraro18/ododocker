@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_product_template_form_inherit" model="ir.ui.view">
+        <field name="name">coordinacion.view.product_template.form.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        
+        <field name="arch" type="xml">
+                <xpath expr="//page[@name='inventory']" position="before">
+                    
+                        <page string="Auditoría" name="auditoria" >
+                            <group string="Última modificación">
+                                <field name="write_uid" string="Usuario modif."/>
+                                <field name="write_date" string="Fecha modif."/>
+                            </group> 
+                        </page>
+
+                        <page string="Histórico de Precios" name="historico" >
+                            <group string="Vigencias de precios">
+                                <field name="vigencia_ids">
+                                    <tree editable="false">
+                                        <field name="fecha_inicio"/>
+                                        <field name="fecha_fin"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                            </group> 
+ 
+                            <group string="Vigencias de costos">
+                                <field name="vigencia_costo_ids">
+                                    <tree editable="false">
+                                        <field name="fecha_inicio"/>
+                                        <field name="fecha_fin"/>
+                                        <field name="costo"/>
+                                    </tree>
+                                </field>
+                            </group> 
+                        
+                        </page>
+
+                </xpath>
+                <xpath expr="//field[@name='sale_ok']" position="before">
+                    <group>
+                        <field name="description" string="Descripción"/>
+                        <field name="active" required="True"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='uom_po_id']" position="after">
+                        <field name="costo"  string="Costo del producto"
+                            widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                </xpath>
+
+        </field>
+    </record>
+
+</odoo>

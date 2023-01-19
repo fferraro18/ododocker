@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+          <record id="NEONATO" model="hcd.poblacion_asistida">
+            <field name="name">NEONATO</field>
+            <field name="color">1</field>
+          </record>
+          <record id="PEDIATRICO" model="hcd.poblacion_asistida">
+            <field name="name">PEDIATRICO</field>
+            <field name="color">2</field>
+          </record>
+          <record id="ADULTO" model="hcd.poblacion_asistida">
+            <field name="name">ADULTO</field>
+            <field name="color">3</field>
+          </record>
+          <record id="PALIATIVO" model="hcd.poblacion_asistida">
+            <field name="name">PALIATIVO</field>
+            <field name="color">4</field>
+          </record>
+    </data>
+</odoo>

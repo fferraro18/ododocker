@@ -1,0 +1,31 @@
+<odoo>
+    <data>
+          <record id="dia_habil" model="hcd.dia">
+            <field name="name">HABIL</field>
+          </record>
+          <record id="dia_inhabil" model="hcd.dia">
+            <field name="name">NO HABIL</field>
+          </record>
+<!--
+          <record id="object1" model="library_app.library_app">
+            <field name="name">Object 1</field>
+            <field name="value">10</field>
+          </record>
+
+          <record id="object2" model="library_app.library_app">
+            <field name="name">Object 2</field>
+            <field name="value">20</field>
+          </record>
+
+          <record id="object3" model="library_app.library_app">
+            <field name="name">Object 3</field>
+            <field name="value">30</field>
+          </record>
+
+          <record id="object4" model="library_app.library_app">
+            <field name="name">Object 4</field>
+            <field name="value">40</field>
+          </record>
+-->
+    </data>
+</odoo>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="view_coordinacion_agenda_form" model="ir.ui.view">
+        <field name="model">hcd.agenda</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+
+            <form>
+                <sheet>
+                    <group>
+                        <!-- <field name="name" /> -->
+                        <field name="plan_trabajo_id" />
+                        <field name="paciente_id" required="True" />
+                        <field name="prestador_id" required="True" />
+                        <field name="fecha_visita" required="True" />
+                        <field name="duracion" required="True" />
+                        <field name="producto_id" required="True" />
+                        <field name="precio_prestacion" />
+                        <field name="costo_prestacion" />
+                        <field name="observaciones" />
+                        <field name="estado" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+
+    </record>
+
+    <record id="view_tree_agenda" model="ir.ui.view">
+        <field name="name">Plan de trabajo Tree</field>
+        <field name="model">hcd.agenda</field>
+        <field name="arch" type="xml">
+             <tree decoration-danger="estado == 'no_asignado'" 
+            decoration-warning="estado == 'asignado'" 
+            decoration-success="estado == 'ejecutado'">
+                <field name="plan_trabajo_id" optional="show"/>
+                <field name="fecha_visita" optional="show"/>
+                <field name="paciente_id" optional="show"/>
+                <field name="producto_id" optional="show"/>
+                <field name="descripcion_view" type="html" string="Descripción" optional="show"/>
+                <field name="prestador_id" optional="show"/>
+                <field name="proveedor_id" optional="show"/>
+                <field name="empleado_id" string="Coordinador" optional="show"/>
+                <field name="obra_social_view" string="Cliente" optional="show"/>
+                <field name="estado"
+                    decoration-warning="estado == 'asignado'"
+                    decoration-danger="estado == 'no_asignado'"
+                    decoration-success="estado == 'ejecutado'"
+                    widget="badge" />
+                <!-- <field name="ejecutado"/>  -->
+                <field name="executed"/>
+                <field name="precio_prestacion" optional="show"/>
+                <field name="costo_prestacion" optional="show"/>
+                <field name="confirmado" optional="hide"/> 
+                <field name="no_prorrogar" optional="hide"/> 
+                <field name="copago" optional="hide"/> 
+                <field name="porcentaje_fc" optional="hide"/> 
+                
+                <field name="estado_liq" optional="hide"/> 
+                <field name="estado_fac" optional="hide"/> 
+
+                <field name="fecha_confirmado" optional="hide"/>
+                <field name="fecha_liquidado" optional="hide"/>
+                <field name="fecha_facturado" optional="hide"/>
+                <field name="fecha_pagado" optional="hide"/>
+                
+                <field name="cant_ingreso" optional="hide"/>
+                <field name="cant_costo" optional="hide"/>
+                <field name="observaciones" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_calendar_agenda" model="ir.ui.view">
+        <field name="name">Plan de trabajo calendar</field>
+        <field name="model">hcd.agenda</field>
+        <field name="arch" type="xml">
+            <calendar string="Plan de trabajo" date_start="fecha_visita" mode="month" quick_add="False" date_delay="duracion" color="prestador_id_view">
+                <field name="paciente_id" />
+                <field name="prestador_id" filters="1" invisible="1" />
+                <field name="estado" filters="1" invisible="1" />
+                <field name="prestador_id_view" invisible="1" />
+            </calendar>
+        </field>
+    </record>
+    <record id="view_agenda_filter" model="ir.ui.view">
+        <field name="name">coordinacion.agenda.search</field>
+        <field name="model">hcd.agenda</field>
+        <field name="arch" type="xml">
+            <search string="agenda">
+                <field name="plan_trabajo_id" />
+                <field name="paciente_id" />
+                <field name="prestador_id" />
+                <field name="proveedor_id" />
+                <field name="producto_id" />
+                <field name="descripcion_view" />
+                <field name="empleado_id" />
+                <field name="estado" />
+            </search>
+        </field>
+    </record>
+
+
+    <record id='action_agenda' model='ir.actions.act_window'>
+        <field name='name'>Plan de trabajo</field>
+        <field name="res_model">hcd.agenda</field>
+        <field name="view_mode">tree,form,calendar,kanban</field>
+        <field name="view_ids" eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_agenda')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_agenda_form')})]" />
+        <field name="help" type="html">
+            <p class="o_view_noncontent_smiling_face">
+            Creación de Plan de trabajo
+        </p>
+        </field>
+    </record>
+</odoo>

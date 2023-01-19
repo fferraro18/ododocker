@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_coordinacion_paciente_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>
+                <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': [('same_vat_partner_id', '=', False)]}">
+                  A partner with the same <span><span class="o_vat_label">Tax ID</span></span> already exists (<field name="same_vat_partner_id"/>), are you sure to create a new one?
+                </div>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <field name="avatar_128" invisible="1"/>
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
+
+
+                    <div class="oe_title mb24">
+                        <field name="active" invisible="1"/>
+                        <field name="is_company" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
+                        <field name="type" invisible="1"/>
+                        <field name="user_ids" invisible="1"/>
+                        <h1>
+                            <field id="individual" class="o_text_overflow" name="name"  placeholder="e.g. APELLIDO1 APELLIDO2 Nombre1 Nombre2" />
+                        </h1>
+                        
+                    </div>   
+
+                    <group>
+                        
+                        <group>
+                            <field name="id"  string="Historia Clínica" attrs="{'readonly': True}"/>
+                            <field name="first_name" required="True" default_focus="1"/>
+                            <field name="last_name" required="True"/>
+                            
+                            <field name="fecha_alta"/>
+                            <field name="diagnostico_id" string="Diagnóstico" required="True" options="{'no_create_edit' : True, 'no_create': True, 'no_quick_create': True, 'no_open': True}"/>
+                            <field name="program" required="True"/>
+                            <field name="zona_costos_id"  required="True" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="estado_paciente" required="True"/>
+                            <!-- <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/> -->
+                        </group>
+                        
+                        <group>
+                                
+                                
+                                <field name="paciente_con_financiador" required="True"/>
+                                <field name="obra_social_id" attrs="{'invisible': [('paciente_con_financiador', '=', False)],'required': [('paciente_con_financiador', '=', True)] }" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="nro_afiliado" attrs="{'invisible': [('paciente_con_financiador', '=', False)],'required': [('paciente_con_financiador', '=', True)] }"/>
+                                <field name="pami_gp" attrs="{'invisible': [('paciente_con_financiador', '=', False)] }"/>
+                                
+                                <field name="nodo_id" required="True"/> 
+                                <field name="coordinador_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="comercial_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="hcd_id" string="GP Id" readonly="1"/>
+                            <!-- </div> -->
+                  
+                        </group>
+                    </group>
+
+                    <notebook colspan="4">
+
+                        <page string="Datos Personales" name="datos_personales" autofocus="autofocus">
+                         <group>  
+                            <group>
+                                <field name="dni_tipo" placeholder="DNI Tipo" required="True"/>
+                                <field name="dni" placeholder="DNI Nro" required="True"/>
+                                <field name="iva_paciente" string="IVA" required="True"/>
+                                <!-- <field name="vat" string="CUIT/CUIL" placeholder="Number" class="oe_inline" required="True"/>-->
+                                <field name="birthday" string="Fecha de nac." placeholder="Fecha de Nacimiento" required="True"/> 
+                                <field name="person_age"/>
+                                <field name="gender" string="Género" required="True"/>
+                                <field name="estado_civil" required="True"/>   
+
+                                <field name="celular" widget="phone" string="Celular"  placeholder="Caract sin cero + numero, sin espacios" required="True"/>
+                                <field name="celular_contacto"  widget="phone"  placeholder="Teléfono de contacto"/>
+                                <field name="email" widget="email" context="{'gravatar_image': True}" />                
+                            
+                            </group>   
+
+                            <group>       
+                                <field name="street" string="Calle"  class="o_address_street" required="True"/>
+                                <field name="direccion_altura" required="True"/>
+                                <field name="direccion_pisodpto"/>
+                                <field name="direccion_barrio"/>
+                                
+                                <field name="city" string="Localidad" class="o_address_city" required="True"/>
+                                <field name="direccion_partido"/>
+                                <field name="state_id" string="Provincia" required="True" class="o_address_state"  options="{'no_open': True, 'no_create': True}"  context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="country_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="tipo_paciente" required="True" string="Rango etario"/>
+                                <field name="complejidad" required="True"/>
+                                <field name="paliativo_paciente" required="True"/>
+                                <field name="discapacidad" required="True"/>
+                                <field name="porcentaje_vip"/>
+                                
+                                <field name="recurso_amparo"/>        
+                                <field name="paciente_con_coseguro" string="Tiene coseguro"/>         
+                            </group>
+                         </group>   
+                        </page>
+
+<!--
+                        <page string="Facturación y Contabilidad" name="contact_addresses">
+                            <group>
+                                <field name="l10n_ar_afip_responsibility_type_id" string="Condición Fiscal" required="True"/>
+                                <field name="vat" string="CUIT/CUIL" placeholder="Number" class="oe_inline" />
+                               <field name="l10n_ar_afip_responsibility_type_id"  string="Responsabilidad AFIP"/> 
+                                <field name="days_to_pay" string="Día de pago" placeholder="Entero menor que 31"/>
+                            </group>    
+                            <group string="Bank Accounts">
+                                <field name="bank_ids">
+                                    <tree editable="bottom">
+                                        <field name="bank_id"/>
+                                        <field name="acc_number"/>
+                                        <field name="cbu"/>
+                                        <field name="acc_holder_name" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>  
+                            
+                            
+                        </page>
+-->                        
+                        <page string="Internaciones" name="internaciones" >
+                            <group string="Última modificación">
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </group> 
+
+                            <group string="Internaciones">
+                                <field name="internaciones_ids"
+                                    widget="section_and_note_one2many">
+                                    <control>
+                                        <create string="Add a line" />
+                                    </control>
+                                            <tree editable="false">
+                                                <field name="fecha_inicio"/>
+                                                <field name="fecha_fin"/>
+                                                <field name="diagnostico_id" options="{'no_open': True, 'no_create': True}"/>
+                                                <field name="observaciones"/>
+                                            </tree>
+                                </field>
+                            </group> 
+
+
+                        </page>
+                        
+                        <page string="Facturación" name="factu_terceros" >
+                            <group>
+                                <field name="razon_social_privado" string="Razón Social (a quién facturar)"/>
+                                <field name="l10n_ar_afip_responsibility_type_id"  string="Responsabilidad AFIP" /> 
+                                <field name="vat" string="CUIT/CUIL" placeholder="Number" class="oe_inline" /> 
+                                <field name="tipo_factura_id" string="Comprobante principal" /> 
+                                <field name="days_to_pay" string="Día de pago" placeholder="Entero menor que 31" />  
+                                <field name="property_payment_term_id" />
+                            
+                            </group>   
+                            <group>
+                                <field name="penalty_day"/>
+                                <field name="forma_pago" string="Formas de pago"/>
+                                <field name="facturacion_obs"/>
+                            </group>  
+                            
+                            <group string="Percepciones">
+                                <field name="codigo_percepciones"/>
+                                <field name="provincia_percepciones"/>
+                                <field name="pocentaje_percepciones"/>
+                                <field name="exento_percepciones"/>
+                                <field name="fecha_validez_percepciones"/>
+                            </group>  
+
+                            <group string="Bank Accounts">
+                                <field name="bank_ids">
+                                    <tree editable="bottom">
+                                        <field name="bank_id" required="True"/>
+                                        <field name="titular"/>
+                                        <field name="cuit"/>
+                                        <field name="acc_number"/>
+                                        <field name="cbu"/>
+                                        <field name="tipo_cuenta"/>
+                                        <field name="acc_holder_name" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>  
+                            
+                            
+                        </page>
+                     
+
+                        <page string="Notas Internas" name="internal_notes" >
+                            <field name="comment" placeholder="Internal note..."/>
+                        </page>
+
+                         <page string="Auditoría" name="auditoria" >
+                            <group string="Última modificación">
+                                <field name="write_uid" string="Usuario modif."/>
+                                <field name="write_date" string="Fecha modif."/>
+                                <field name="fecha_baja"/>
+                                <field name="motivo_baja_paciente"/>
+                                <field name="auditoria_obs"/>
+                            </group> 
+                        </page>
+                    </notebook>
+                </sheet>
+
+<!--     Esta página la saco , y la dejo en res_partner_views porque no la puedo poner a la derecha , la pone debajo -->
+              <!--  <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+-->
+
+                </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_paciente" model="ir.ui.view">
+        <field name="name">Checkout Tree</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id" string="H.C."/>
+                <field name="name" />
+                <field name="dni" />
+                <field name="coordinador_id"/>
+                <field name="obra_social_id" />
+                <field name="diagnostico_id" />
+            </tree>
+        </field>
+    </record>
+
+       <record id="view_paciente_filter" model="ir.ui.view">
+            <field name="name">coordinacion.paciente.search</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search string="Pacientes">
+                    <field name="name"/>
+                    <field name="dni"/>
+                    <field name="coordinador_id"/>
+                    <field name="obra_social_id"/>
+                    <field name="diagnostico_id"/>
+                </search>
+             </field>
+    </record>
+
+<record id='action_paciente' model='ir.actions.act_window'>
+    <field name='name'>Paciente</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="search_view_id" ref="view_paciente_filter"/>
+    <field name="context">{'default_hcd_type':'paciente','default_country_id':10}</field>
+    <field name="domain">['|',('hcd_type', '=', 'paciente'),('hcd_type', '=', 'cliente_paciente')]</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_paciente')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_paciente_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Paciente
+        </p>
+        </field>
+  </record>
+
+  <menuitem
+    id="coordinacion_menu_paciente"
+    name="Pacientes"
+    parent="coordinacion_menu"
+    action="action_paciente"
+    sequence="5"
+  />
+
+</odoo>

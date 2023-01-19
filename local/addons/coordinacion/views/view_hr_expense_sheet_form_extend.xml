@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="coordinacion_view_hr_expense_sheet_form_inherit" model="ir.ui.view">
+        <field name="name">coordinacion.view.hr.expense.sheet.form.inherit</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="before">
+                <field name="prestador_id"/>
+                <field name="paciente_id"/>
+                <field name="cantidad_aprobada"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

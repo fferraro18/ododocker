@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_tree_excepcion_costo_prestador" model="ir.ui.view">
+        <field name="name">Tree Excepciones</field>
+        <field name="model">hcd.excepcion_costo_prestador</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="prestador_id" />
+                <field name="paciente_id" />
+                <field name="fecha_ini" />
+                <field name="fecha_fin" />
+                <field name="nomenclador_id" />
+                <field name="precio_base" />
+            </tree>
+        </field>
+    </record>
+
+        <record id="view_excepcion_costo_prestador_filter" model="ir.ui.view">
+            <field name="name">coordinacion.excepcion.costo.prestador.search</field>
+            <field name="model">hcd.excepcion_costo_prestador</field>
+            <field name="arch" type="xml">
+                <search string="Excepciones de costos">
+                    <field name="name"/>
+                    <field name="prestador_id"/>
+                    <field name="paciente_id"/>
+                    <field name="nomenclador_id" />
+                </search>
+             </field>
+        </record>
+
+</odoo>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_coordinacion_nomenclador_costo_form" model="ir.ui.view">
+        <field name="model">hcd.nomenclador_costo</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>
+            
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    
+                                   
+                    
+        <div class="oe_title">
+		<!--<label for="name" string="Nombre"/>-->
+          <h1>
+            <div class="d-flex">
+              <field id="individual" class="o_text_overflow" name="name"  readonly="1"  placeholder="Nombre" required="False"/>
+            </div>
+          </h1>
+        </div>
+
+
+                    <group>
+                     
+                        <group>
+                            <field name="name"/>
+                            <field name="description"   attrs="{'readonly': True}"/>
+                            <field name="nomenclador_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="paliativo"  required="True"/>
+                            <field name="tipo_paciente" string="Tipo (por edad)" required="True"/>
+                            <field name="zona_costos_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="profesion_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="complejidad" />
+                            <field name="dia_habil" string="Día habil?"/>
+                            <field name="discapacidad" />
+                            
+                        </group>
+                        
+                        <group>
+			   
+                            <!-- <field name="fecha_inicio" string="Vigencia desde:"/> -->
+                            <field name="costo" 
+                                widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    
+                            <!-- <field name="fecha_vigencia_costo" string="Vigencia costo desde:"/> -->
+                           
+                        </group>
+                    </group>
+                    
+                     <notebook colspan="4">
+
+                        <page string="Auditoría" name="auditoria" >
+                            <group string="Última modificación">
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </group> 
+
+                        </page>
+                    
+
+                        <page string="Vigencias de Costos" name="vigencia_costo" >
+                            <group string="Vigencias">
+                                <field name="vigencia_costo_ids">
+                                    <tree editable="false">
+                                        <field name="fecha_inicio"/>
+                                        <field name="fecha_fin"/>
+                                        <field name="costo"/>
+                                    </tree>
+                                </field>
+                            </group> 
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+<!--     Esta página la saco , y la dejo en res_partner_views porque no la puedo poner a la derecha , la pone debajo -->
+              <!--  <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+-->
+
+                </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_nomenclador_costo" model="ir.ui.view">
+        <field name="name">view_tree_nomenclador_costo</field>
+        <field name="model">hcd.nomenclador_costo</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="nomenclador_id" />
+                <field name="description" />
+                <field name="paliativo" />
+                <field name="tipo_paciente" />
+                <field name="zona_costos_id" />
+                <field name="profesion_id" />
+                <field name="complejidad" />
+                <field name="dia_habil" />
+                <field name="discapacidad" />
+                <field name="costo" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_nomenclador_costo_filter" model="ir.ui.view">
+        <field name="name">coordinacion.nomenclador.costo.search</field>
+        <field name="model">hcd.nomenclador_costo</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <search string="Costos">
+                <field name="name"/>
+                <field name="description" />
+                <field name="nomenclador_id" />
+                <field name="tipo_paciente"/>
+                <field name="paliativo" />
+                <field name="zona_costos_id"/>
+                <field name="profesion_id" />
+                <field name="complejidad" />
+                <field name="dia_habil" />
+                <field name="discapacidad" />
+            </search>
+        </field>
+    </record>
+
+
+</odoo>

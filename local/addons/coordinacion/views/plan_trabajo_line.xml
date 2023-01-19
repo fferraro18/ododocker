@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_coordinacion_plan_trabajo_line_form" model="ir.ui.view">
+        <field name="model">hcd.plan_trabajo_line</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>   
+                        <group>
+                            <field name="product_id" required="True" domain="['|',('hcd_categ_prod','!=','servicio'),('obra_social_id', '=', parent.filtro_id)]" options="{'no_create_edit': True, 'no_create':True, 'no_open':True}"/>
+                            <field name="descripcion_view" readonly="1"/>
+                            <field name="categoria_view" readonly="1"/>
+                            <field name="cantidad" required="True" />
+                            <field name="frecuencia" required="True" />
+                            <field name="dias_ids" widget="many2many_tags"  options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" attrs="{'invisible':[('frecuencia','!=', 'semanal')]}"/>
+                            <field name="fechas_seleccionadas"  widget="multiple_datepicker" attrs="{'invisible':[('frecuencia','!=', 'quincenal'),('frecuencia','!=', 'mensual')]}" />
+                            <field name="fecha_aux_ini" attrs="{'invisible':['|',('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                            <field name="fecha_aux_fin" attrs="{'invisible':['|',('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                            <field name="calculo_cantidad" string="Calcular cantidad"/>
+                            <field name="cantidad_total"/>
+                            <field name="hora_inicio"/>
+                            <field name="cantidad_horas" string="Hs"/>
+                            <field name="prestador_id" options="{'no_open': True, 'no_create': True}" attrs="{'invisible':[('categoria_view','!=','servicio')]}"/>
+                            <field name="proveedor_id" options="{'no_open': True, 'no_create': True}" attrs="{'invisible':[('categoria_view','=','servicio')]}"/>
+                            <field name="precio"/>
+                            <field name="costo"/> 
+                            <field name="estado" readonly="1"/> 
+                            <field name="pagador_id" /> 
+                            <field name="nro_autorizacion" /> 
+                            <field name="nro_op_pami" />
+                            <field name="observaciones"/>
+                            <field name="duracion" invisible="1"/>        
+                        </group>
+
+<group>
+                 <button name="viaticos"  attrs="{'invisible':[('prestador_id','=', False)]}"
+                            string="Viáticos"
+                            type="object"
+                            icon="fa-plus"
+                            class="btn-primary"/>
+
+</group>
+            
+                    <!-- <footer>
+                        <button name="viaticos"  attrs="{'invisible':[('prestador_id','=', False)]}"
+                            string="Viáticos"
+                            type="object"
+                            icon="fa-plus"
+                            class="btn-primary"/>
+
+                    </footer> -->
+                
+            
+            </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_plan_trabajo_line" model="ir.ui.view">
+        <field name="name">plan Tree</field>
+        <field name="model">hcd.plan_trabajo_line</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+        
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_plan_trabajo_line_filter" model="ir.ui.view">
+            <field name="name">coordinacion.plan.trabajo.line.search</field>
+            <field name="model">hcd.plan_trabajo_line</field>
+            <field name="arch" type="xml">
+                <search string="planes">
+                    <field name="name"/>
+           
+                </search>
+             </field>
+    </record>
+
+
+<record id='action_plan_trabajo_line' model='ir.actions.act_window'>
+    <field name='name'>plan_trabajo_line</field>
+    <field name="res_model">hcd.plan_trabajo_line</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_plan_trabajo_line')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_plan_trabajo_line_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de plan
+        </p>
+        </field>
+  </record>
+
+
+
+ <record id='action_plan_trabajo_line' model='ir.actions.act_window'>
+    <field name='name'>plan</field>
+    <field name="res_model">hcd.plan_trabajo_line</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+
+</odoo>

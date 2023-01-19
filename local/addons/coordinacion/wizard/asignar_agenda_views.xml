@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="asignar_agenda_form_view_wiz" model="ir.ui.view">
+            <field name="name">asignar.agenda.form.view.wiz</field>
+            <field name="model">hcd.asignar.agenda</field>
+            <field name="arch" type="xml">
+                <form>
+                   <group>
+                        <group>
+                            <field name="prestador_id" required="True"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Asignar prestador : Confirmar " type="object" name="asignar_agenda" class="btn-primary" />
+                        <button string="Cancelar" special="cancel" class="btn-secondary" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="asignar_agenda_action_window" model="ir.actions.act_window">
+            <field name="name">Asignar Agenda</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="asignar_agenda_form_view_wiz" />
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_hcd_agenda" />
+            <field name="binding_view_types">list</field>
+        </record>
+        
+    </data>
+</odoo>

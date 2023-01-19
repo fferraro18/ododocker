@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_coordinacion_material_form" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    
+                                   
+                    
+        <div class="oe_title">
+		<!--<label for="name" string="Nombre"/>-->
+          <h1>
+            <div class="d-flex">
+              <field name="priority" widget="priority" class="mr-3"/>
+              <field class="text-break" name="name"/>
+            </div>
+          </h1>
+        </div>
+
+
+                    <group>
+                     
+                        <group>
+                            
+                            <field name="description"  required="True"/>
+                            <field name="list_price" class="oe_inline"
+                                widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                            <field name="costo" class="oe_inline"
+                                widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                            <field name="active" />
+		                    
+                        </group>
+                        
+                    </group>
+
+                    <notebook>
+
+                        <page string="Auditoría" name="auditoria" >
+                            <group string="Última modificación">
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </group> 
+
+                            <group string="Histórico de precios">
+                                <field name="vigencia_ids">
+                                    <tree editable="false">
+                                        <field name="fecha_inicio"/>
+                                        <field name="fecha_fin"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                            </group> 
+
+
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+                </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_material" model="ir.ui.view">
+        <field name="name">Checkout Tree Material</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="description" />
+                <field name="list_price" />
+            </tree>
+        </field>
+    </record>
+
+        <record id="view_material_filter" model="ir.ui.view">
+            <field name="name">coordinacion.material.search</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <search string="Materiales">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="list_price"/>
+                </search>
+             </field>
+        </record>
+
+</odoo>

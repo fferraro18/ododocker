@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <!-- Coordinacion App Menu -->
+  <menuitem id="menu_coordinacion" name="Coordinacion" />
+  <!-- Action to open the Book list -->
+  <record id='action_servicios' model='ir.actions.act_window'>
+    <field name='name'>Servicios</field>
+    <field name="res_model">product.template</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_categ_prod':'servicio'}</field>
+    <field name="domain">[('hcd_categ_prod', '=', 'servicio')]</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_servicios')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_servicios_form')})]"
+    
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Servicios
+        </p>
+        </field>
+  </record>
+
+  <record id='action_nomenclador_costo' model='ir.actions.act_window'>
+    <field name='name'>Costos de nomencladores</field>
+    <field name="res_model">hcd.nomenclador_costo</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_nomenclador_costo')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_nomenclador_costo_form')})]"
+    
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Costos de Nomencladores
+        </p>
+        </field>
+  </record>
+
+  <record id='action_materiales' model='ir.actions.act_window'>
+    <field name='name'>Materiales</field>
+    <field name="res_model">product.template</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'default_hcd_categ_prod':'material'}</field>
+    <field name="domain">[('hcd_categ_prod', '=', 'material')]</field>
+<!--   <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_material')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_material_form')})]"
+        /> -->
+    <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Material
+        </p>
+    </field>
+  </record>
+
+  <record id='action_equipamiento' model='ir.actions.act_window'>
+    <field name='name'>Equipamiento</field>
+    <field name="res_model">product.template</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_categ_prod':'equipamiento'}</field>
+    <field name="domain">[('hcd_categ_prod', '=', 'equipamiento')]</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_equipamiento')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_equipamiento_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Equipamiento
+        </p>
+        </field>
+  </record>
+
+    <record id='action_laboratorio' model='ir.actions.act_window'>
+    <field name='name'>Laboratorio</field>
+    <field name="res_model">product.template</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_categ_prod':'laboratorio'}</field>
+    <field name="domain">[('hcd_categ_prod', '=', 'laboratorio')]</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_laboratorio')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_laboratorio_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Laboratorio
+        </p>
+        </field>
+  </record>
+
+  <record id='action_modulado' model='ir.actions.act_window'>
+    <field name='name'>Modulado</field>
+    <field name="res_model">hcd.modulado</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id='action_excepcion_costo' model='ir.actions.act_window'>
+    <field name='name'>Excepciones</field>
+    <field name="res_model">hcd.excepcion_costo_prestador</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id='action_viaticos' model='ir.actions.act_window'>
+    <field name='name'>Viáticos</field>
+    <field name="res_model">hr.expense</field>
+    <field name="view_mode">form</field>
+   <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                  Register a expenses
+                </p>
+            </field>
+  </record>
+
+  <record id='action_liquido_prestador' model='ir.actions.act_window'>
+    <field name='name'>Liquidación Prestador</field>
+    <field name="res_model">hcd.liquido.prestador</field>
+    <field name="view_mode">form</field>
+  </record>
+
+  <record id='action_cliente' model='ir.actions.act_window'>
+    <field name='name'>Cliente</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form</field>
+    <field name="context">{'default_hcd_type':'cliente' , 'default_is_company':'True',
+                     'default_cliente_estado':'activo', 'default_company_type':'company','default_country_id':10}</field>
+    <field name="domain">['|',('hcd_type', '=', 'cliente'),('hcd_type', '=', 'cliente_paciente')]</field>
+  </record>
+  
+  <record id='action_prestador' model='ir.actions.act_window'>
+    <field name='name'>Prestadores</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_type':'prestador'}</field>
+    <field name="domain">[('hcd_type', '=', 'prestador')]</field>
+  </record>
+
+   <record id='action_proveedor' model='ir.actions.act_window'>
+    <field name='name'>Proveedores</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_type':'proveedor'}</field>
+    <field name="domain">[('hcd_type', '=', 'proveedor')]</field>
+  </record>
+  <record id='action_efector' model='ir.actions.act_window'>
+    <field name='name'>Efectores</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_type':'efector'}</field>
+    <field name="domain">[('hcd_type', '=', 'efector')]</field>
+  </record>
+  <record id='action_tecnico' model='ir.actions.act_window'>
+    <field name='name'>Tecnicos</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="context">{'default_hcd_type':'tecnico'}</field>
+    <field name="domain">[('hcd_type', '=', 'tecnico')]</field>
+  </record>
+
+
+  <record id='action_convenios' model='ir.actions.act_window'>
+    <field name='name'>Convenios</field>
+    <field name="res_model">hcd.convenio</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+ 
+  <record id='action_zona_geografica' model='ir.actions.act_window'>
+    <field name='name'>Zona Geográfica</field>
+    <field name="res_model">hcd.zona_geografica</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id='action_zona_cobertura' model='ir.actions.act_window'>
+    <field name='name'>Zona de cobertura</field>
+    <field name="res_model">hcd.zona_cobertura</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id='action_zona_costos' model='ir.actions.act_window'>
+    <field name='name'>Zona de costos</field>
+    <field name="res_model">hcd.zona_costos</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id='action_feriados' model='ir.actions.act_window'>
+    <field name='name'>Feriados</field>
+    <field name="res_model">hcd.feriados</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id="view_tree_feriados" model="ir.ui.view">
+        <field name="name">Tree Feriados</field>
+        <field name="model">hcd.feriados</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="feriado" />
+            </tree>
+        </field>
+  </record>
+
+   <record id='action_nodo' model='ir.actions.act_window'>
+    <field name='name'>Nodo</field>
+    <field name="res_model">hcd.nodo</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+   <record id='action_profesion' model='ir.actions.act_window'>
+    <field name='name'>Profesion</field>
+    <field name="res_model">hcd.profesion</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  <record id='action_diagnostico' model='ir.actions.act_window'>
+    <field name='name'>Diagnostico</field>
+    <field name="res_model">hcd.diagnostico</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_diagnostico')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_diagnostico_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Diagnóstico
+        </p>
+        </field>
+  </record>
+  <record id='action_nomenclador' model='ir.actions.act_window'>
+    <field name='name'>Nomenclador</field>
+    <field name="res_model">hcd.nomenclador</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  
+
+  <record id='action_plan' model='ir.actions.act_window'>
+    <field name='name'>Plan de Trabajo</field>
+    <field name="res_model">hcd.plan_trabajo</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+  
+  <record id='action_plan_line' model='ir.actions.act_window'>
+    <field name='name'>Plan de Trabajo Line</field>
+    <field name="res_model">hcd.plan_trabajo_line</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <record id='action_agenda' model='ir.actions.act_window'>
+    <field name='name'>Agenda</field>
+    <field name="res_model">hcd.agenda</field>
+    <field name="view_mode">tree,form,calendar,kanban</field>
+  </record>
+
+  <record id='action_categoria_nomenclador' model='ir.actions.act_window'>
+    <field name='name'>Categoria Nomenclador</field>
+    <field name="res_model">hcd.categoria_nomenclador</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_categoria_nomenclador')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_categoria_nomenclador_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Categoria Nomenclador
+        </p>
+        </field>
+  </record>
+
+
+  <record id='action_import_pami' model='ir.actions.act_window'>
+    <field name='name'>OP Pami (importados)</field>
+    <field name="res_model">hcd.modelo_pami</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_modelo_pami')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Importacion del modelo de Pami
+        </p>
+        </field>
+  </record>
+
+  <record id='action_import_visitas_pami' model='ir.actions.act_window'>
+    <field name='name'>Visitas Pami (importadas)</field>
+    <field name="res_model">hcd.visitas_pami</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_visitas_pami')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Importacion del modelo de visitas de Pami
+        </p>
+        </field>
+  </record>
+
+  <!-- Menu item to open the Book list -->
+  <!-- Menu item to open the Book list -->
+  <menuitem 
+    id="coordinacion_menu"
+    name="Coordinación"
+    web_icon="coordinacion,static/description/icon.png"
+    groups="library_group_user"
+  />
+  <menuitem
+    id="precios_menu"
+    name="Precios"
+    parent="coordinacion_menu"
+    sequence="8"
+    groups="library_group_manager"
+  />
+  <menuitem
+    id="coordinacion_config_menu"
+    name="Variables del Servicio"
+    parent="coordinacion_menu"
+    sequence="35"
+    groups="library_group_manager"
+  />
+  
+  <menuitem
+    id="coordinacion_profesionales_menu"
+    name="Prestadores"
+    parent="coordinacion_menu"
+    sequence="7"
+  />
+
+  <menuitem
+    id="menu_materiales_menu"
+    name="Materiales"
+    parent="precios_menu"
+    action="action_materiales"
+    sequence="2"
+  />
+  <menuitem
+    id="menu_servicios_menu"
+    name="Servicios"
+    parent="precios_menu"
+    action="action_servicios"
+    sequence="2"
+  />
+  <menuitem
+    id="menu_categoria_nomenclador_menu"
+    name="Categoria Nomenclador"
+    parent="coordinacion_config_menu"
+    action="action_categoria_nomenclador"
+    sequence="1"
+  />
+  <menuitem
+    id="menu_nomenclador_menu"
+    name="Nomenclador"
+    parent="coordinacion_config_menu"
+    action="action_nomenclador"
+    sequence="3"
+  />
+ 
+   <menuitem
+    id="menu_nomenclador_costo_menu"
+    name="Costos"
+    parent="coordinacion_menu"
+    action="action_nomenclador_costo"
+    sequence="8"
+  />
+  <menuitem
+    id="menu_cliente_menu"
+    name="Cliente"
+    parent="coordinacion_menu"
+    action="action_cliente"
+    sequence="8"
+  />
+
+  <menuitem
+    id="menu_proveedor_menu"
+    name="Proveedor"
+    parent="coordinacion_menu"
+    action="action_proveedor"
+    sequence="8"
+  />
+
+
+  <menuitem
+    id="menu_equipamiento_menu"
+    name="Equipamiento"
+    parent="precios_menu"
+    action="action_equipamiento"
+    sequence="8"
+  />
+
+  <menuitem
+    id="menu_laboratorio_menu"
+    name="Laboratorio"
+    parent="precios_menu"
+    action="action_laboratorio"
+    sequence="8"
+  />
+
+  <menuitem
+    id="menu_modulado_menu"
+    name="Modulado"
+    parent="precios_menu"
+    action="action_modulado"
+    sequence="8"
+  />
+
+  <menuitem
+    id="coordinacion_menu_convenios"
+    name="Convenios"
+    parent="coordinacion_config_menu"
+    action="action_convenios"
+    sequence="10"
+  />
+
+  <menuitem
+    id="coordinacion_menu_zona_geografica"
+    name="Zona Geográfica"
+    parent="coordinacion_config_menu"
+    action="action_zona_geografica"
+    sequence="8"
+  />
+  <menuitem
+    id="coordinacion_menu_zona_cobertura"
+    name="Zona de cobertura"
+    parent="coordinacion_config_menu"
+    action="action_zona_cobertura"
+    sequence="8"
+  />
+  <menuitem
+    id="coordinacion_menu_zona_costos"
+    name="Zona de costos"
+    parent="coordinacion_config_menu"
+    action="action_zona_costos"
+    sequence="8"
+  />
+  <menuitem
+    id="coordinacion_menu_feriados"
+    name="Feriados"
+    parent="coordinacion_config_menu"
+    action="action_feriados"
+    sequence="8"
+  />
+  <menuitem
+    id="coordinacion_menu_nodo"
+    name="Nodo"
+    parent="coordinacion_config_menu"
+    action="action_nodo"
+    sequence="8"
+  />
+   <menuitem
+    id="coordinacion_menu_profesion"
+    name="Profesión"
+    parent="coordinacion_config_menu"
+    action="action_profesion"
+    sequence="8"
+  />
+   <menuitem
+    id="coordinacion_menu_diagnostico"
+    name="Diagnóstico"
+    parent="coordinacion_config_menu"
+    action="action_diagnostico"
+    sequence="8"
+  />
+
+  <menuitem
+    id="pami_menu"
+    name="Pami"
+    parent="coordinacion_menu"
+    sequence="36"
+    groups="library_group_manager"
+  />
+
+  <menuitem
+    id="menu_modelo_pami"
+    name="Modelo Pami"
+    parent="pami_menu"
+    action="action_import_pami"
+    sequence="1"
+  />
+
+  <menuitem
+    id="menu_visitas_pami"
+    name="visitas"
+    parent="pami_menu"
+    action="action_import_visitas_pami"
+    sequence="2"
+  />
+
+   <menuitem
+    id="menu_prestador_menu"
+    name="Prestadores"
+    parent="coordinacion_profesionales_menu"
+    action="action_prestador"
+    sequence="1"
+  />
+  <menuitem
+    id="menu_efector_menu"
+    name="Efectores"
+    parent="coordinacion_profesionales_menu"
+    action="action_efector"
+    sequence="2"
+  />
+
+  <menuitem
+    id="menu_tecnico_menu"
+    name="Técnicos"
+    parent="coordinacion_profesionales_menu"
+    action="action_tecnico"
+    sequence="2"
+  />
+  <menuitem
+    id="menu_excepcion_costo"
+    name="Excepciones"
+    parent="coordinacion_profesionales_menu"
+    action="action_excepcion_costo"
+    sequence="2"
+  />
+
+  <menuitem
+    id="menu_viaticos"
+    name="Viáticos"
+    parent="coordinacion_profesionales_menu"
+    action="action_viaticos"
+    sequence="2"
+  />
+  
+  <menuitem
+    id="menu_liquido_prestador"
+    name="Liquidación"
+    parent="coordinacion_profesionales_menu"
+    action="action_liquido_prestador"
+    sequence="2"
+  />
+   <menuitem
+    id="menu_plan_menu"
+    name="Orden de prestación"
+    parent="coordinacion_menu"
+    action="action_plan"
+    sequence="10"
+  />
+
+  <menuitem
+    id="menu_plan_linea_menu"
+    name="Lineas de prestación"
+    parent="coordinacion_menu"
+    action="action_plan_line"
+    sequence="12"
+  />
+
+     <menuitem
+    id="menu_agenda_menu"
+    name="Plan de trabajo"
+    parent="coordinacion_menu"
+    action="action_agenda"
+    sequence="11"
+  />
+ 
+</odoo>

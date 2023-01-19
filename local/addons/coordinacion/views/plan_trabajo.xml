@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_coordinacion_plan_form" model="ir.ui.view">
+        <field name="model">hcd.plan_trabajo</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form create="false">   
+                <sheet>
+                        <group>
+                            <field name="name" string="Nombre" required="True"/>
+                            <field name="descripcion" string="Descripción"/>
+                            <field name="paciente_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="obra_social_view" string="Financiador" />
+                            <field name="nodo_view" string="Nodo" />
+                            <field name="empleado_id" string="Coordinador"/> 
+                            <!-- <field name="coordinador_id_view" string="Coordinador" readonly="1"/> -->
+                            <field name="fecha_inicio" />
+                            <field name="fecha_fin" />
+                            <field name="fecha_creacion" required="True"/>
+                            <field name="filtro_id" readonly="1"/>
+                            <field name="status"/>
+                            <field name="status_pami" />
+                            
+                        </group>
+                        
+                           <group>
+                       <!-- <group string="Prestaciones">  -->
+                                <field name="producto_ids_original" string="Prestaciones originales" readonly="1">
+                                    <tree >
+                                        <field name="product_id" />
+                                        <field name="descripcion_view"/>
+                                        <field name="cantidad"/>
+                                        <field name="frecuencia"/>
+                                        <field name="cantidad_total"/>
+                                        <field name="dias_ids" widget="many2many_tags"  options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" attrs="{'invisible':[('frecuencia','!=', 'semanal')]}"/>
+                                        <field name="fechas_seleccionadas"  widget="multiple_datepicker" attrs="{'invisible':[('frecuencia','!=', 'quincenal'),('frecuencia','!=', 'mensual')]}" />
+                                        <field name="fecha_aux_ini" attrs="{'invisible':['|',('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                                        <field name="fecha_aux_fin" attrs="{'invisible':['|',('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                                        <field name="hora_inicio"/>
+                                        <field name="cantidad_horas" string="Hs"/>
+                                        <field name="nro_autorizacion"/>
+                                        <field name="precio"/>
+                                        <field name="costo"/>
+                                    </tree>
+                                </field>
+                        </group>
+                   <notebook>
+                        <page string="Order Lines" name="order_lines">
+                       <!-- <group string="Prestaciones">  -->
+                                <field name="producto_ids" 
+                                        context="{'default_fecha_aux_ini': fecha_inicio,'default_fecha_aux_fin': fecha_fin}">
+                                    <tree multi-edit="1">
+                                        <field name="product_id" />
+                                        <field name="descripcion_view"/>
+                                        <field name="cantidad"/>
+                                        <field name="frecuencia"/>
+                                        <field name="cantidad_total"/>
+                                        <field name="dias_ids" widget="many2many_tags"  options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" attrs="{'invisible':[('frecuencia','!=', 'semanal')]}"/>
+                                        <field name="fechas_seleccionadas"  widget="multiple_datepicker" attrs="{'invisible':[('frecuencia','!=', 'quincenal'),('frecuencia','!=', 'mensual')]}" />
+                                        <field name="fecha_aux_ini" attrs="{'invisible':['|',('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                                        <field name="fecha_aux_fin" attrs="{'invisible':['|',('frecuencia','=', 'quincenal'),('frecuencia','=', 'mensual')]}"/>
+                                        <field name="hora_inicio"/>
+                                        <field name="cantidad_horas" string="Hs"/>
+                                        <field name="precio"/>
+                                        <field name="prestador_id"/>
+                                        <field name="proveedor_id"/>
+                                        <field name="cantidad_realizadas"/>
+                                        <field name="porcentaje_realizado" string="%"/>
+                                        <field name="costo"/>
+                                        <field name="estado"
+                                        decoration-warning="estado == 'No asignado'"
+                                        decoration-danger="estado == 'Rechazado'"
+                                        decoration-success="estado == 'Asignado'"
+                                        widget="badge"/>
+                                    </tree>
+                                </field>
+                        </page>
+
+                        <page string="Notas Internas" name="internal_notes" >
+                            <field name="comment" placeholder="Internal note..."/>
+                        </page>
+
+                    </notebook>  
+
+                    <footer>
+
+                        <button name="crea_agenda" 
+                            string="Crea el Plan de trabajo"
+                            type="object"
+                            icon="fa-plus"
+                            class="btn-primary"/>
+
+                        <button name="agenda_filtrada" 
+                            string="Visualiza P.T."
+                            type="object"
+                            icon="fa-plus"
+                            class="btn-primary"/>
+
+                        <button name="primer_visita_pami"  attrs="{'invisible':[('status_pami','=', 'no_pami')]}"
+                            string="Agendar primer visita"
+                            type="object"
+                            icon="fa-plus"
+                            class="btn-primary"/>
+
+
+                    </footer>
+                </sheet>
+
+                <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+            </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_plan" model="ir.ui.view">
+        <field name="name">Orden de prestación Tree</field>
+        <field name="model">hcd.plan_trabajo</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="name" />
+                <field name="paciente_id" />
+                <field name="obra_social_view" string="Financiador" />
+                <field name="fecha_inicio" optional="show"/>
+                <field name="fecha_fin" optional="show"/>
+                <field name="empleado_id" />
+                <field name="status" optional="show"/>
+                <field name="status_pami"  optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_plan_filter" model="ir.ui.view">
+            <field name="name">coordinacion.plan.search</field>
+            <field name="model">hcd.plan_trabajo</field>
+            <field name="arch" type="xml">
+                <search string="planes">
+                    <field name="name"/>
+                    <field name="paciente_id"/>
+                    <field name="empleado_id"/>
+                    <field name="obra_social_view" />
+                    <field name="status" />
+                    <field name="status_pami" />
+                </search>
+             </field>
+    </record>
+
+    <record id='action_plan' model='ir.actions.act_window'>
+        <field name='name'>Orden de prestación</field>
+        <field name="res_model">hcd.plan_trabajo</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" 
+                eval="[(5,0,0),
+                (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_plan')}),
+                (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_plan_form')})]"
+            />
+            <field name="help" type="html">
+            <p class="o_view_noncontent_smiling_face">
+                Creación de Orden
+            </p>
+            </field>
+    </record>
+
+    <record id='action_plan' model='ir.actions.act_window'>
+        <field name='name'>Orden de prestación</field>
+        <field name="res_model">hcd.plan_trabajo</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+</odoo>

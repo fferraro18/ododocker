@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+          <record id="convenio_FATSA" model="hcd.convenio">
+            <field name="name">FATSA</field>
+          </record>
+          <record id="complejidad_SSS" model="hcd.convenio">
+            <field name="name">SSS</field>
+          </record>
+    </data>
+</odoo>

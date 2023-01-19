@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<odoo>
+    <data>
+
+        <record id="coordinacion_view_form_inherit_paciente" model="ir.ui.view">
+            <field name="name">coordinacion.view.form.inherit.paciente</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="view_coordinacion_paciente_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+ <!--      <record id="coordinacion_view_form_inherit_cliente" model="ir.ui.view">
+            <field name="name">coordinacion.view.form.inherit.cliente</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="view_coordinacion_cliente_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+-->
+        <record id="res_partner_view_form_inherit_mail" model="ir.ui.view">
+            <field name="name">res.partner.view.form.inherit.mail</field>
+            <field name="model">res.partner</field>
+            <!--<field name="inherit_id" ref="base.view_partner_form"/>  -->
+            <field name="inherit_id" ref="view_coordinacion_prestador_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='email']" position="replace">
+                    <field name="is_blacklisted" invisible="1"/>
+                    <label for="email" class="oe_inline"/>
+                    <div class="o_row o_row_readonly">
+                        <button name="mail_action_blacklist_remove" class="fa fa-ban text-danger"
+                            title="This email is blacklisted for mass mailings. Click to unblacklist."
+                            type="object" context="{'default_email': email}" groups="base.group_user"
+                            attrs="{'invisible': [('is_blacklisted', '=', False)]}"/>
+                        <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
+                    </div>
+                </xpath>
+                <xpath expr="//sheet" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+<!--  Agregar dependencia necesaria  ..
+ERROR :   AttributeError: 'hcd.plan_trabajo' object has no attribute '_message_get_suggested_recipients'
+falta todo lo de la clase  --> 
+
+<!--       <record id="view_coordinacion_plan_inherit_form" model="ir.ui.view">
+            <field name="name">view.coordinacion.plan.inherit.form</field>
+            <field name="model">hcd.plan_trabajo</field>
+            <field name="inherit_id" ref="view_coordinacion_plan_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+-->
+      
+    </data>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="liquido_prestador_form_view_wiz" model="ir.ui.view">
+            <field name="name">liquido.prestador.form.view.wiz</field>
+            <field name="model">hcd.liquido.prestador</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="prestador_id" required="True"/>
+                            <field name="fecha_inicio" required="True"/>
+                            <field name="fecha_fin" required="True"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Buscar" type="object" name="busco_prestador" class="btn-primary" />
+                        <button string="Cancelar" special="cancel" class="btn-secondary" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="liquido_prestador_action_window" model="ir.actions.act_window">
+            <field name="name">Lquidación de Prestadores</field>
+            <field name="res_model">hcd.liquido.prestador</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="coordinacion.liquido_prestador_form_view_wiz" />
+            <field name="target">new</field>
+            <!-- <field name="binding_model_id" ref="model_product_template" />
+            <field name="binding_view_types">list</field> -->
+        </record>
+        
+    </data>
+</odoo>

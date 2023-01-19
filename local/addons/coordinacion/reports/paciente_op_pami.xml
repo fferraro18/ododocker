@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<template id="report_op_pami_cdsm_text">
+CABECERA
+30-71016088-7;329;14/11/2022;10-22;SAD CORDOBA S.A.;1;UP30710160887;28669
+RED
+30-71016088-7;;;0;CM;SAD CORDOBA S.A.;0;F SANCHEZ;3081;0;0;;3512425076
+PROFESIONAL
+<t t-foreach="docs" t-as="o">
+;;;0;<t t-esc="o.prestador_id.last_name"/><t t-esc="o.prestador_id.first_name"/>;1;<t t-esc="o.prestador_id.matricula_nac"/>;<t t-esc="o.prestador_id.matricula_prov"/>;<t t-esc="o.prestador_id.dni_tipo"/>;<t t-esc="o.prestador_id.dni"/>;poner cuit;<t t-esc="o.prestador_id.street"/>;<t t-esc="o.prestador_id.direccion_altura"/>;<t t-esc="o.prestador_id.direccion_pisodpto"/>;0;;<t t-esc="o.prestador_id.telefono_comercial"/>
+</t>
+PRESTADOR
+;30-71016088-7;258089;;0;UP30710160887;96954;2;1;1;RMARCHETTO@ENCASA.COM.AR;01/01/2010;;;;0;0;0;SAD CORDOBA S.A.;OBISPO TREJO;648;;0;40130123;3512425076;28669
+REL_PROFESIONALESXPRESTADOR
+;30-71016088-7;258089;0;0;
+BOCA_ATENCION
+;30-71016088-7;;0;1;10;F SANCHEZ;3081;0;0;;3512425076
+REL_MODULOSXPRESTADOR
+;30-71016088-7;;0;1;
+;30-71016088-7;;0;2;
+;30-71016088-7;;0;3;
+;30-71016088-7;;0;4;
+REL_PRESTADORESXRED
+30-71016088-7;30-71016088-7;;0;0;
+BENEFICIO
+<t t-foreach="docs" t-as="o">
+;;;<t t-esc="o.paciente_id.nro_afiliado"/>;;;1;<t t-esc="o.fecha_visita"/>
+</t>
+AFILIADO
+<t t-foreach="docs" t-as="o">
+<t t-esc="o.paciente_id.name"/>;<t t-esc="o.paciente_id.dni_tipo"/>;<t t-esc="o.paciente_id.dni"/>;;;;;;;;;;<t t-esc="o.paciente_id.birthday"/>;<t t-esc="o.paciente_id.gender"/>;;;015022445800;00;;;;;;;;
+</t>
+</template>
+</odoo>

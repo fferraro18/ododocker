@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="coordinacion_hr_expense_sheet_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.expense.sheet.tree.inherit</field>
+        <field name="model">hr.expense.sheet</field>
+        <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="prestador_id" optional="show"/>
+                <field name="paciente_id" optional="show"/>
+                <field name="cantidad_aprobada" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="coordinacion_view_expenses_tree" model="ir.ui.view">
+            <field name="name">coordinacion.hr.expense.tree.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_expenses_analysis_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="after"> 
+                    <field name="prestador_id" optional="show" string="Prestador"/>
+                </xpath>
+            </field>
+    </record>
+
+    <record id="coordinacion_hr_expense_view_search" model="ir.ui.view">
+            <field name="name">coordinacion.hr.expense.view.search.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='employee_id']" position="after"> 
+                    <field name="prestador_id"/>
+                </xpath>
+            </field>
+    </record>
+
+</odoo>

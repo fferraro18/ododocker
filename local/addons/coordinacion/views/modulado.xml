@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_coordinacion_modulado_form" model="ir.ui.view">
+        <field name="model">hcd.modulado</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>   
+                <sheet>
+                        <group>
+                            <field name="id" readonly="1"/>
+                            <field name="name" string="Nombre" required="True"/>
+                            <field name="comment" string="Descripción" required="True"/>
+                            <field name="precio" required="True"/>
+                            <field name="precio_referencia" readonly="1"/>
+                            <field name="costo" required="True"/>
+                            <field name="costo_referencia" readonly="1"/>
+                            <field name="utilizar_vigencia" string="Utilizar vigencia"/>
+                            <field name="vigencia_desde" attrs="{'invisible': [('utilizar_vigencia', '=', False)], 'required': [('utilizar_vigencia', '=', True)]}"/>
+                            <field name="vigencia_hasta" attrs="{'invisible': [('utilizar_vigencia', '=', False)], 'required': [('utilizar_vigencia', '=', True)]}"/>
+                        </group>
+                        <group>
+
+                            <field name="obra_social_id" required="True"/>
+                            <field name="codigo_cliente" />
+                            <field name="codigo_cliente_desc" />
+                            <field name="modulo_padre" />
+                            
+                            <field name="tipo_paciente" required="True"/>
+                            <field name="paliativo" required="True"/>
+                            <field name="complejidad" />
+                            <field name="discapacidad" />
+                            <field name="dia_habil" required="True"/>
+                            <field name="zona_costos_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="filtro_id" readonly="1"/>
+                        
+                        </group>
+                        <group>
+                            <field name="estado_producto" string="Producto asociado" readonly="1"
+                                    decoration-success="estado_producto == 'CREADO'"
+                                    decoration-warning="estado_producto == 'SIN CREAR'"
+                                    decoration-danger="estado_producto == 'procesado_error'"
+                                    widget="badge"/>
+
+                            <button name="crea_producto" 
+                                string="Crea un producto asociado"
+                                attrs="{'invisible': ['|',('estado_producto','=','CREADO'),('id','=', False)]}"
+                                type="object"
+                                icon="fa-plus"
+                                class="btn-primary"/>   
+                        
+                        </group>
+
+                   <notebook>
+                        <page string="Order Lines" name="order_lines">
+                       <!-- <group string="Prestaciones">  -->
+                                <field name="producto_ids"
+                                        context="{'default_fecha_aux_ini': vigencia_desde,'default_fecha_aux_fin': vigencia_hasta}">
+                                    <!-- <tree editable="bottom" > -->
+                                    <tree multi-edit="1"> 
+                                        <field name="product_id" required="True"/>
+                                        <field name="descripcion_view" readonly="1"/>
+                                        <field name="cantidad" required="True"/>
+                                        <field name="frecuencia" required="True"/>
+                                        <field name="dias_ids" widget="many2many_tags"  options="{'no_create_edit': True, 'no_create':True, 'no_open':True}" attrs="{'invisible':[('frecuencia','!=', 'semanal')]}"/>
+                                        <field name="fechas_seleccionadas"  widget="multiple_datepicker" attrs="{'invisible':[('frecuencia','!=', 'quincenal'),('frecuencia','!=', 'mensual')]}" />
+                                        <field name="cant_max_mensual"/>
+                                        <field name="precio_referencia" readonly="1"/>
+					                    <field name="porcentaje" readonly="1" />
+                                        <field name="precio"/>
+                                        <field name="costo"/>
+                                         <field name="costo_referencia" readonly="1"/>
+                                    </tree>
+                                </field>
+                        </page>
+
+                        <page string="Notas Internas" name="internal_notes" >
+                            <field name="comment" placeholder="Internal note..."/>
+                        </page>
+
+                    </notebook>  
+                </sheet>
+
+                <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+            </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_modulado" model="ir.ui.view">
+        <field name="name">Modulado Tree</field>
+        <field name="model">hcd.modulado</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="codigo_cliente" />
+                <field name="name" />
+                <field name="precio" />
+                <field name="comment" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_modulado_filter" model="ir.ui.view">
+            <field name="name">coordinacion.modulado.search</field>
+            <field name="model">hcd.modulado</field>
+            <field name="arch" type="xml">
+                <search string="modulados">
+                    <field name="name"/>
+                    <field name="comment"/>
+                </search>
+             </field>
+    </record>
+
+
+<record id='action_modulado' model='ir.actions.act_window'>
+    <field name='name'>modulado</field>
+    <field name="res_model">hcd.modulado</field>
+    <field name="view_mode">tree,form</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_modulado')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_modulado_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Modulado
+        </p>
+        </field>
+  </record>
+
+
+
+ <record id='action_modulado' model='ir.actions.act_window'>
+    <field name='name'>modulado</field>
+    <field name="res_model">hcd.modulado</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+
+
+</odoo>

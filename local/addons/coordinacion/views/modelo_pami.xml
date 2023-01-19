@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+      <record id="view_tree_modelo_pami" model="ir.ui.view">
+        <field name="name">Modelo Pami Tree</field>
+        <field name="model">hcd.modelo_pami</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="estado_procesamiento == 'procesado_error'" 
+            decoration-warning="estado_procesamiento == 'sin_procesar'" 
+            decoration-success="estado_procesamiento == 'procesado'">
+                <header>
+                    <button string="generar plan de trabajo" type="object" name="generar_plan_trabajo" class="btn-primary" />
+                </header>
+                <field name="name" />
+                <field name="ugl" optional="hide"/>
+                <field name="agencia" optional="hide"/>
+                <field name="motivo_emision" />
+                <field name="f_solicitud" />
+                <field name="nro_beneficio" />
+                <field name="nro_op" optional="show"/>
+                <field name="ep_rechazada" optional="show" />
+                <field name="solicitante" optional="hide"/>
+                <field name="estado_procesamiento" 
+                decoration-warning="estado_procesamiento == 'sin_procesar'"
+                decoration-danger="estado_procesamiento == 'procesado_error'"
+                decoration-success="estado_procesamiento == 'procesado'"
+                widget="badge"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_modelo_pami_filter" model="ir.ui.view">
+        <field name="name">coordinacion.modelo_pami.search</field>
+        <field name="model">hcd.modelo_pami</field>
+        <field name="arch" type="xml">
+            <search string="OP">
+                <field name="name"/>
+                <field name="nro_beneficio"/>
+                <field name="nro_op"/>
+                <field name="estado_procesamiento"/>
+                <field name="ep_rechazada" />
+            </search>
+        </field>
+    </record>
+    
+
+
+</odoo>

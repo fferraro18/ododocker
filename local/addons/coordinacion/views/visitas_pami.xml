@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_tree_visitas_pami" model="ir.ui.view">
+        <field name="name">Visitas Pami Tree</field>
+        <field name="model">hcd.visitas_pami</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="estado_procesamiento == 'procesado_error'" 
+            decoration-warning="estado_procesamiento == 'sin_procesar'" 
+            decoration-success="estado_procesamiento == 'procesado'">
+                <header>
+                    <button string="procesar visitas" type="object" name="procesar_visitas_pami" class="btn-primary" />
+                </header>
+
+                <field name="name" />
+                <field name="nro_afiliado_pami" />
+                <field name="celular_afiliado" />
+                <field name="responsable" />
+                <field name="matricula" optional="hide"/>
+                <field name="dni_prestador" optional="show"/>
+                <field name="tipo_prestador"/>
+                <field name="email_prestador" optional="hide"/>
+                <field name="nro_visita" optional="show"/>
+                <field name="estado" optional="hide"/>
+                <field name="fecha_comienzo"/>
+                <field name="fecha_fin" />
+                <field name="duracion" optional="hide"/>
+                <field name="razon_social" optional="hide"/>
+                <field name="sap_empresa_prestadora" optional="hide"/>
+                <field name="ugl_empresa_prestadora" optional="hide"/>
+                <field name="estado_procesamiento" 
+                decoration-warning="estado_procesamiento == 'sin_procesar'"
+                decoration-danger="estado_procesamiento == 'procesado_error'"
+                decoration-success="estado_procesamiento == 'procesado'"
+                widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_visitas_pami_filter" model="ir.ui.view">
+        <field name="name">coordinacion.visitas_pami.search</field>
+        <field name="model">hcd.visitas_pami</field>
+        <field name="arch" type="xml">
+            <search string="visitas">
+                <field name="name"/>
+                <field name="nro_afiliado_pami"/>
+                <field name="responsable"/>
+                <field name="dni_prestador"/>
+                <field name="estado_procesamiento"/>
+                <field name="tipo_prestador"/>
+            </search>
+        </field>
+    </record>
+    
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="actualizo_precios_valor_form_view_wiz" model="ir.ui.view">
+            <field name="name">actualizo.precios.valor.form.view.wiz</field>
+            <field name="model">hcd.actualizo.precios.valor</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="precio" required="True"/>
+                            <field name="fecha_inicio" required="True"/>
+                            <field name="fecha_fin" />
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="actualizar precios valor" type="object" name="actualizar_precios_valor" class="btn-primary" />
+                        <button string="Cancelar" special="cancel" class="btn-secondary" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="actualizar_precios_valor_action_window" model="ir.actions.act_window">
+            <field name="name">Actualizar Precios por valor</field>
+            <field name="res_model">hcd.actualizo.precios.valor</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="coordinacion.actualizo_precios_valor_form_view_wiz" />
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_product_template" />
+            <field name="binding_view_types">list</field>
+        </record>
+        
+    </data>
+</odoo>

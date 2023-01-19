@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_coordinacion_servicios_form" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>
+             <!--   <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': [('same_vat_partner_id', '=', False)]}">
+                  A partner with the same <span><span class="o_vat_label">Tax ID</span></span> already exists (<field name="same_vat_partner_id"/>), are you sure to create a new one?
+                </div>
+                -->
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    
+                                   
+                    
+        <div class="oe_title">
+		<!--<label for="name" string="Nombre"/>-->
+          <h1>
+            <div class="d-flex">
+              <field id="individual" class="o_text_overflow" name="name"  readonly="1"  placeholder="Nombre" required="False"/>
+            </div>
+          </h1>
+        </div>
+
+
+                    <group>
+                     
+                        <group>
+                            <field name="description"   attrs="{'readonly': True}"/>
+                            <field name="nomenclador_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="obra_social_id" required="True" options="{'no_open': True, 'no_create': True}"/>  <!-- domain="[('hcd_type', '=', 'obrasocial')]" -->
+                            
+                            <field name="paliativo"  required="True"/>
+                            <field name="tipo_paciente" string="Tipo (por edad)" required="True"/>
+		                   
+                            
+                            <field name="zona_geografica_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="complejidad" />
+                            <field name="dia_habil" string="Día habil?"/>
+                            <field name="discapacidad" />
+                            <field name="porcentaje_vip" string="VIP [%]"/>
+                            
+                            <field name="hcd_categ_prod" invisible="1"/>
+                            
+                        </group>
+                        
+                        <group>
+			    <!--<field name="vigencia_id" />-->
+			                
+                            <label for="list_price" class="mt-1"/>
+                                    <div name="pricing">
+                                      <field name="list_price" class="oe_inline" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    </div>
+                            
+                            <field name="fecha_inicio" string="Vigencia desde:"/>
+                            
+                            <!--   Costos van a Nomenclador costo-->
+                            <!-- <field name="costo" 
+                                widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    
+                            <field name="fecha_vigencia_costo" string="Vigencia costo desde:"/> -->
+
+                            <field name="active" /> 
+                            <field name="codigo_cliente" />
+                            <field name="codigo_cliente_desc" />
+                        </group>
+                    </group>
+                    
+                     <notebook colspan="4">
+
+                        <page string="Auditoría" name="auditoria" >
+                            <group string="Última modificación">
+                                <field name="write_uid"/>
+                                <field name="write_date"/>
+                            </group> 
+
+                        </page>
+                    
+
+                        <page string="Vigencias de Precios" name="vigencia_precio" >
+                            <group string="Vigencias">
+                                <field name="vigencia_ids">
+                                    <tree editable="false">
+                                        <field name="fecha_inicio"/>
+                                        <field name="fecha_fin"/>
+                                        <field name="price"/>
+                                    </tree>
+                                </field>
+                            </group> 
+                        </page>
+
+                        <!-- <page string="Vigencias de Costos" name="vigencia_costo" >
+                            <group string="Vigencias">
+                                <field name="vigencia_costo_ids">
+                                    <tree editable="false">
+                                        <field name="fecha_inicio"/>
+                                        <field name="fecha_fin"/>
+                                        <field name="costo"/>
+                                    </tree>
+                                </field>
+                            </group> 
+                        </page> -->
+                    </notebook>
+
+                </sheet>
+
+<!--     Esta página la saco , y la dejo en res_partner_views porque no la puedo poner a la derecha , la pone debajo -->
+              <!--  <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+-->
+
+                </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_servicios" model="ir.ui.view">
+        <field name="name">view_tree_servicios</field>
+        <field name="model">product.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="description" />
+                <field name="cat_nomenclador_view" optional="show"/>
+                <field name="nomenclador_id" optional="show"/>
+                <field name="obra_social_id" />
+                <field name="paliativo" optional="show"/>
+                <field name="tipo_paciente" optional="show"/>
+                <field name="zona_geografica_id" optional="show"/>
+                <field name="complejidad" optional="show"/>
+                <field name="dia_habil" optional="show"/>
+                <field name="discapacidad" optional="show"/>
+                <field name="porcentaje_vip" string="VIP [%]" optional="show"/>
+                <field name="list_price" optional="show"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_servicios_filter" model="ir.ui.view">
+        <field name="name">coordinacion.servicios.search</field>
+        <field name="model">product.template</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <search string="Servicios">
+                <field name="name"/>
+                <field name="description" />
+                <field name="tipo_paciente"/>
+                <field name="obra_social_id"/>
+                <field name="nomenclador_id" />
+                <field name="cat_nomenclador_view"/>
+                <field name="paliativo" />
+                <field name="zona_geografica_id"/>
+                <field name="complejidad" />
+                <field name="dia_habil" />
+                <field name="discapacidad" />
+                <field name="porcentaje_vip" />
+            </search>
+        </field>
+    </record>
+
+
+</odoo>

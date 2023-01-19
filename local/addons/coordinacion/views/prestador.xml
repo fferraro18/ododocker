@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record id="view_coordinacion_prestador_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+                    
+            <form>
+                <div class="alert alert-warning oe_edit_only" role="alert" attrs="{'invisible': [('same_vat_partner_id', '=', False)]}">
+                  A partner with the same <span><span class="o_vat_label">Tax ID</span></span> already exists (<field name="same_vat_partner_id"/>), are you sure to create a new one?
+                </div>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <field name="avatar_128" invisible="1"/>
+                    <field name="image_1920" widget="image" class="oe_avatar" options="{&quot;preview_image&quot;: &quot;avatar_128&quot;}"/>
+                                   
+                    
+                   <!-- <div class="oe_title mb24">
+                        <field name="is_company" invisible="1"/>
+                        <field name="commercial_partner_id" invisible="1"/>
+                        <field name="active" invisible="1"/>
+                        <field name="country_code" invisible="1"/>
+                        <field name="company_type" widget="radio" options="{'horizontal': true}"/>
+                        <h1>
+                            <field id="company" class="o_text_overflow" name="name" default_focus="1" placeholder="e.g. Lumber Inc" attrs="{'required' : [('type', '=', 'contact'),('is_company', '=', True)], 'invisible': [('is_company','=', False)]}"/>
+                            <field id="individual" class="o_text_overflow" name="name" default_focus="1" placeholder="e.g. Brandom Freeman" attrs="{'required' : [('type', '=', 'contact'), ('is_company', '=', False)], 'invisible': [('is_company','=', True)]}"/>
+                        </h1>
+                        <div class="o_row">
+                            <field name="parent_id" widget="res_partner_many2one" placeholder="Company Name..." domain="[('is_company', '=', True)]" context="{'default_is_company': True, 'show_vat': True}" attrs="{'invisible': ['|', '&amp;', ('is_company','=', True),('parent_id', '=', False),('company_name', '!=', False),('company_name', '!=', '')]}"/>
+                                <field name="company_name" attrs="{'invisible': ['|', '|', ('company_name', '=', False), ('company_name', '=', ''), ('is_company', '=', True)]}"/>
+                                <button name="create_company" icon="fa-plus-square" string="Create company" type="object" class="oe_edit_only btn-link" attrs="{'invisible': ['|', '|', ('is_company','=', True), ('company_name', '=', ''), ('company_name', '=', False)]}"/>
+                        </div>
+                    </div>   -->
+
+
+                    <div class="oe_title mb24">
+                        <field name="active" invisible="1"/>
+                        <field name="is_company" invisible="1"/>
+                        <field name="parent_id" invisible="1"/>
+                        <field name="type" invisible="1"/>
+                        <field name="user_ids" invisible="1"/>
+                        <field name="hcd_type" invisible="1"/>
+                        <h1> 
+                            <field id="individual" class="o_text_overflow" name="name" placeholder="e.g. APELLIDO1 APELLIDO2 Nombre1 Nombre2"/>
+                        </h1>
+                        
+                    </div>   
+
+                    <group>
+                        <!--<group>
+                            <span class="o_form_label o_td_label" name="address_name">
+                                <field name="type" attrs="{'invisible': [('is_company','=', True)], 'required': [('is_company','!=', True)], 'readonly': [('user_ids', '!=', [])]}" class="font-weight-bold"/>
+                                <b attrs="{'invisible': [('is_company', '=', False)]}">Address</b>
+                            </span>
+                         
+                            
+                        </group> -->
+                        <group>
+                            <field name="id"  string="Legajo" attrs="{'readonly': True}"/>
+                            <field name="first_name" required="True" default_focus="1"/>
+                            <field name="last_name" required="True"/>
+                            <field name="status" string="Estado" required="True"/>
+                            <field name="fecha_alta" required="True"/>
+                            <field name="zona_cobertura_pres_id"  required="True" widget="many2many_tags"  options="{'color_field': 'color','no_open': True, 'no_create': True}" placeholder="Seleccione ..."/>
+                            <field name="sadofe" string="Disp. SADOFE" required="True"/>
+                        </group>
+                        
+                        <group name="referencia">
+                            <field name="scoring" widget="priority"/>
+                            
+                            
+                            <field name="active_lang_count" invisible="1"/>
+                            <label for="lang" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"/>
+                            <div class="o_row" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}">
+                                <field name="lang"/>
+                                <button type="action" name="56" class="btn-sm btn-link mb4 fa fa-globe" aria-label="More languages" groups="base.group_system" title="More languages"/>
+                            </div>
+                            
+                            <field name="paliativo_prestador" required="True"/>
+                            <field name="poblacion_asistida_ids" required="True" widget="many2many_tags"  options="{'color_field': 'color','no_open': True, 'no_create': True}" placeholder="Seleccione ..."/>
+                            <field name="dispo_horaria" required="True" string="Franja horaria"/> 
+                            <field name="cat_nomenclador_ids" widget="many2many_tags" options="{'no_open': True, 'no_create': True}" placeholder="Nomencladores..."/>
+                            <field name="es_grupo" string="Es grupo?"/>
+                            
+                            <field name="category_id" string="Etiqueta genérica" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."/>
+                        </group>
+                    </group>
+
+                    <notebook colspan="4">
+
+                        <page string="Datos Personales" name="datos_personales" autofocus="autofocus">
+                         <group>  
+                            <group>
+                                <field name="es_grupo" invisible="1"/>
+                                <field name="dni_tipo" placeholder="DNI Tipo" attrs="{'required': [('es_grupo', '=', False)]}"/>
+                                <field name="dni" placeholder="DNI Nro" attrs="{'required': [('es_grupo', '=', False)]}"/>
+                                <field name="birthday" string="Fecha de nac." placeholder="Fecha de Nacimiento" required="True"/> 
+                                <field name="person_age"/>
+                                <field name="gender" string="Género" required="True"/>
+
+                               
+                               <!-- <field name="l10n_ar_afip_responsibility_type_id"  string="Responsabilidad AFIP"/> -->
+
+                                
+
+                                <field name="celular" widget="phone" string="Celular"  placeholder="Caract sin cero + numero, sin espacios" required="True"/>
+                                <field name="celular_contacto"  string="Otro teléfono" widget="phone"  placeholder="Teléfono de contacto"/>
+        
+                                <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}" required="True"/>
+                                
+                                
+                            
+                            </group>   
+
+                            <group>       
+                                <field name="street" string="Calle"  class="o_address_street" required="True"/>
+                                <field name="direccion_altura" required="True"/>
+                                <field name="direccion_pisodpto"/>
+                                <field name="direccion_barrio"/>
+                                
+                                <field name="city" string="Localidad" class="o_address_city" required="True"/>
+                                <field name="direccion_partido"/>
+                                <field name="state_id" string="Provincia" required="True" class="o_address_state"  options="{'no_open': True, 'no_create': True}"  context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="country_id" invisible="1"/>
+                            </group>
+                         </group>   
+                        </page>
+                        <page string="Datos Profesionales" name="datos_profesionales">
+                            <group>
+                                <field name="mnea" string="Máximo nivel de educación alcanzado"/>
+                                <field name="profesion_id" required="True" string="Profesión"  options="{'no_open': True, 'no_create': True}" />
+                                <!-- <field name="title" options="{&quot;no_open&quot;: True}" placeholder="e.g. Enfermero"/> -->
+                                <field name="specialty" string="Especialidad"/>
+                                <field name="matricula_nac"/>
+                                <field name="matricula_prov"/>
+                                <field name="matricula_prov_entidad" string="Entidad que otorga la matrícula"/>
+                            </group>   
+                        </page>
+                        <page string="Facturación y Contabilidad" name="contact_addresses"  attrs="{'invisible': [('hcd_type', '=', 'efector')]}">
+                            <group>
+                                <field name="contabiliza"/>
+                                <field name="l10n_ar_afip_responsibility_type_id" string="Condición Fiscal" attrs="{'required': [('hcd_type','=', 'prestador'),('contabiliza', '=', True)]}"/>
+                                <field name="vat" string="CUIT/CUIL" placeholder="Number" class="oe_inline" attrs="{'invisible': [('hcd_type', '=', 'efector')], 'required': [('hcd_type', '!=', 'efector'),('contabiliza', '=', True)]}" />
+                                <field name="days_to_pay" string="Día de pago" placeholder="Entero menor que 31" attrs="{'required': [('hcd_type','=', 'prestador')]}"/>
+                                <field name="penalty_day"/>
+                                <field name="forma_pago" string="Formas de pago"/>
+                                <field name="tipo_factura_id" options="{'no_open': True, 'no_create': True}"/>
+                                <field name="seguro_mala_praxis" string="Seguro propio" attrs="{'required': [('hcd_type','=', 'prestador')]}"/>
+                                <field name="facturacion_obs"/>
+                            </group>    
+                            <group string="Percepciones">
+                                <field name="codigo_percepciones"/>
+                                <field name="provincia_percepciones"/>
+                                <field name="pocentaje_percepciones"/>
+                                <field name="exento_percepciones"/>
+                                <field name="fecha_validez_percepciones"/>
+                            </group> 
+                            <group string="Bank Accounts">
+                                <field name="bank_ids">
+                                    <tree editable="bottom">
+                                        <field name="bank_id" required="True" options="{'no_open': True, 'no_create': True}"/>
+                                        <field name="titular"/>
+                                        <!-- <field name="cuit"/> -->
+                                        <field name="acc_number"/>
+                                        <field name="cbu"/>
+                                        <field name="tipo_cuenta"/>
+                                        <field name="acc_holder_name" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>  
+                            
+                            
+                        </page>
+                        
+                        <page string="Notas Internas" name="internal_notes" >
+                            <field name="comment" placeholder="Internal note..."/>
+                        </page>
+
+                        <page string="Auditoría" name="auditoria" >
+                            <group string="Última modificación">
+                                <field name="write_uid" string="Usuario modif."/>
+                                <field name="write_date" string="Fecha modif."/>
+                                <field name="fecha_baja"/>
+                                <field name="motivo_baja"/>
+                                <field name="auditoria_obs"/>
+                            </group> 
+                        </page>
+                    </notebook>
+                </sheet>
+
+<!--     Esta página la saco , y la dejo en res_partner_views porque no la puedo poner a la derecha , la pone debajo -->
+              <!--  <sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </sheet>
+-->
+
+                </form> 
+
+        </field>
+
+    </record>
+
+    <record id="view_tree_checkout" model="ir.ui.view">
+        <field name="name">Checkout Tree</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <tree>
+                <!-- <header>
+                    <button string="Cambio dia" type="object" name="action_done" class="btn-primary" />
+                </header> -->
+                <field name="id" string="Legajo"/>
+                <field name="name" />
+                <field name="profesion_id"/>
+                <field name="poblacion_asistida_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                <field name="paliativo_prestador" optional="show"/>
+                <field name="es_grupo" optional="show"/>
+                <field name="dispo_horaria"/>
+                <field name="cat_nomenclador_ids" widget="many2many_tags"/>
+                <field name="zona_cobertura_pres_id" widget="many2many_tags" options="{'color_field': 'color'}"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_prestador_filter" model="ir.ui.view">
+            <field name="name">coordinacion.prestador.search</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search string="Procuradores">
+                    <field name="name"/>
+                    <field name="profesion_id"/>
+                    <field name="vat"/>
+                    <field name="es_grupo"/>
+                    <field name="poblacion_asistida_ids"/>
+                    <field name="paliativo_prestador"/>
+                    <field name="dispo_horaria"/>
+                    <field name="cat_nomenclador_ids"/>
+                    <field name="zona_cobertura_pres_id"/>
+                </search>
+             </field>
+    </record>
+
+
+<record id='action_prestador' model='ir.actions.act_window'>
+    <field name='name'>Prestadores</field>
+    <field name="res_model">res.partner</field>
+    <field name="view_mode">tree,form,kanban</field>
+    <field name="search_view_id" ref="view_prestador_filter"/>
+    <field name="context">{'default_hcd_type':'prestador','default_country_id':10}</field>
+    <field name="domain">[('hcd_type', '=', 'prestador')]</field>
+    <field name="view_ids" 
+               eval="[(5,0,0),
+               (0,0,{'sequence':2,'view_mode':'tree','view_id': ref('coordinacion.view_tree_checkout')}),
+               (0,0,{'sequence':3,'view_mode':'form','view_id': ref('coordinacion.view_coordinacion_prestador_form')})]"
+        />
+        <field name="help" type="html">
+        <p class="o_view_noncontent_smiling_face">
+            Creación de Prestadores
+        </p>
+        </field>
+  </record>
+
+
+</odoo>

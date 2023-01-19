@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="coordinacion_view_partner_form_inherit" model="ir.ui.view">
+        <field name="name">coordinacion.view.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//field[@name='name']" position="after">
+                <group> 
+                    <field name="hcd_type" string="Tipo de contacto"/>
+                </group> 
+		    </xpath>
+   <!--
+            
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="vendedor_id" />
+		        <field name="ejecutivo_cta_id" />
+		    </xpath>
+
+
+           <xpath expr="//field[@name='street2']" position="after">
+                <field name="direccion_altura" required="True"/>
+		    </xpath>
+         
+                           <group>       
+                                <field name="street" string="Calle"  class="o_address_street" required="True"/>
+                                <field name="direccion_altura" required="True"/>
+                                <field name="direccion_pisodpto"/>
+                                <field name="direccion_barrio"/>
+                                
+                                <field name="city" string="Localidad" class="o_address_city" required="True"/>
+                                <field name="direccion_partido"/>
+                                <field name="state_id" string="Provincia" required="True" class="o_address_state"  options="{'no_open': True, 'no_quick_create': True}"  context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="country_id" invisible="1"/>
+                                <field name="title" options="{&quot;no_open&quot;: True}" placeholder="e.g. Enfermero"/>
+                            </group>
+
+
+    	    <xpath expr="//field[@name='website']" position="after">
+                <field name="usuario_web_portal" />
+		        <field name="contrasena_web_portal" />
+		    </xpath>
+            
+                <xpath expr="//field[@name='category_id']" position="after">
+                    <field name="hcd_type" attrs="{'invisible': True}"/> 
+                    <field name="nodo_id" string="Nodo" attrs="{'invisible': ['|',('hcd_type', '=', 'cliente'),('company_type', '=', 'company')]}"/>
+                    <field name="hcd_id" string="GP Id" />
+                    <field name="cliente_nivel" string="Nivel" attrs="{'invisible': [('hcd_type', '!=', 'cliente')]}"/>
+                    <field name="razon_social" attrs="{'invisible': [('hcd_type', '!=', 'cliente')]}"/>
+                    <field name="nombre_fantasia" attrs="{'invisible': [('hcd_type', '!=', 'cliente')]}"/>
+                    <field name="convenio_id" attrs="{'invisible': [('hcd_type', '!=', 'cliente')]}"/>
+ 
+                    <field name="fecha_alta" string="Fecha de alta" attrs="{'required': [('hcd_type', '=', 'cliente')]}"/>
+		            <field name="limite_credito" />
+                    <field name="active" required="True"/>
+		            <field name="cliente_estado" />
+		            <field name="cliente_subestado" attrs="{'invisible': [('cliente_estado', '!=', 'inactivo')]}" />
+                </xpath>
+                <xpath expr="//field[@name='team_id']" position="before">
+		            <field name="tipo_factura_id" string="Factura por defecto" /> 
+		        </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="before">
+                    
+                    <page string="Confirmar nombre" name="otros" groups="account.group_account_readonly,account.group_account_invoice">
+                        <group>
+                            <field name="alcance_cliente" string="Alcance"/>
+                        </group>
+                    </page>
+                    <page string="Contactos y Direcciones" name="contactos_direcciones">
+                        <group>
+                            <field name="mail_comercial" />
+			    <field name="mail_operaciones" />
+			    <field name="mail_finanzas" />
+                            <field name="telefono_comercial" />
+                            <field name="telefono_operaciones" />
+			    <field name="telefono_finanzas" />
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//field[@name='vat']" position="replace">
+                        <field name="vat" required="True"/>
+                </xpath>
+
+-->
+
+
+        </field>
+    </record>
+
+</odoo>
