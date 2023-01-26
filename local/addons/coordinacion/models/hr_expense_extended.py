@@ -1,4 +1,7 @@
 from odoo import api,fields, models
+import logging
+
+_logger = logging.getLogger(__name__)
 
 class HrExpense(models.Model):
     _inherit = 'hr.expense'
@@ -20,4 +23,5 @@ class HrExpense(models.Model):
     )
 
     def notify_expense(self):
+        _logger.info(f'Ejecutando CRON: {self}')
         pass
