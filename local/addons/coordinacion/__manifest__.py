@@ -30,6 +30,7 @@
         'data/categories.xml',
         'data/nomenclador_categories.xml',
         'data/poblacion_asistida.xml',
+        'data/scheduled_jobs.xml',
         #'data/dia.xml',
         #'data/complejidad.xml',
         #'data/discapacidad.xml',

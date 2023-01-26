@@ -18,3 +18,6 @@ class HrExpense(models.Model):
     plan_trabajo_line_id = fields.Many2one(
         'hcd.plan_trabajo_line', 'Prestación del plan de trabajo'
     )
+
+    def notify_expense(self):
+        pass
