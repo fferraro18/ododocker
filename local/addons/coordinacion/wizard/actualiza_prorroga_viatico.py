@@ -13,19 +13,15 @@ class ProrrogarViatico(models.TransientModel):
     _name = 'hr.prorrogar.viatico'
     _description = "Prorroga de Viaticos"
 
-    fecha_hasta= fields.Date()
-    prestador_id = fields.Many2one(
-        'res.partner', 'Prestador/Efector',
-        domain="['|',('hcd_type', '=', 'prestador'),('hcd_type', '=', 'efector'),('status', '=', 'activo')]",
-        help='Prestador asignado'
-    )
+    fecha_hasta = fields.Date()
 
     def prorrogar_viatico(self):
-        print("Prorroga....")
-        print(self)
-        gastos = self.env['hr.expense'].browse(self._context.get('active_ids',[]))
+        gastos = self.env['hr.expense'].browse(
+            self._context.get('active_ids', []))
         for gasto in gastos:
-             _logger.info("entra en bucles GASTOS:  .................")
-             _logger.info(gasto)
-             gasto.update({'name': gasto.name ,'fecha_hasta': self.fecha_hasta})
+            new_rec = gasto.copy(
+                {'fecha_hasta': self.fecha_hasta, 'prorrogado': True})
+            _logger.info(f'Copiando Gasto: {new_rec}')
+            _logger.info(f'Context: {self.env.context}')
+            # gasto.update({'name': gasto.name, 'fecha_hasta': self.fecha_hasta})
         return True

@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-     <record id="prorrogar_viatico_form_view_wiz" model="ir.ui.view">
+        <record id="view_coordinacion_hr_prorrogar_viatico_wizard_search" model="ir.ui.view">
+            <field name="name">view.coordinacion.hr.prorrogar.viatico.wizard.search</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_search"/>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="prestador_id" />
+                    <field name="fecha_hasta" />
+                    <field name="prorrogado" />
+                    <group expand="0" string="Group By">
+                        <filter name="groupby_prestador" string="Prestador" domain="[]" context="{'group_by':'prestador_id'}" help="Agrupar por Prestador"/>
+                        <filter name="groupby_date" string="Fecha Hasta" context="{'group_by':'fecha_hasta:month'}" help="Agrupar por Fecha Hasta"/>
+                    </group>
+                    <filter name="filter_by_prorrogado" string="Prorrogado" domain="[('prorrogado','=','False')]" help="Viaticos Prorrogados"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="prorrogar_viatico_form_view_wiz" model="ir.ui.view">
             <field name="name">prorrogar.viatico.form.view.wiz</field>
             <field name="model">hr.prorrogar.viatico</field>
             <field name="arch" type="xml">
                 <form>
-                   <group>
-                        <group>
-                            <field name="fecha_hasta" required="True"/>
-                        </group>
+                    <group>
+                        <field name="fecha_hasta" required="True" options="{'datepicker':{'minDate': 'now'}}"/>
                     </group>
                     <footer>
                         <button string="Prorrogar" type="object" name="prorrogar_viatico" class="btn-primary" />
@@ -19,10 +36,10 @@
             </field>
         </record>
 
-     <record id="prorrogar_viatico_action_window_wiz" model="ir.actions.act_window">
+        <record id="prorrogar_viatico_action_window_wiz" model="ir.actions.act_window">
             <field name="name">Prorrogar</field>
             <field name="view_mode">form</field>
-            <!-- <field name="res_model">hr.prorrogar.viatico</field> -->
+            <field name="res_model">hr.prorrogar.viatico</field>
             <field name="view_id" ref="prorrogar_viatico_form_view_wiz" />
             <field name="target">new</field>
             <field name="binding_model_id" ref="model_hr_expense" />
